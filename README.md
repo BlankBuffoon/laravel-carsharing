@@ -4,4 +4,4 @@
 
 ER Диаграмма сущностей, и связей между ними
 
-<img src="ER.png" style="margin: 0 auto;">
+<img src="img/laravel-carsharing-er.png" style="margin: 0 auto;">
