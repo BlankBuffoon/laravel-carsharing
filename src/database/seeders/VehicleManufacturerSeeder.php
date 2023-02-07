@@ -2,15 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Vehicle_manufacturer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
-use App\Models\Manufacturer;
-
-class ManufacturerSeeder extends Seeder
+class VehicleManufacturerSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -21,20 +17,15 @@ class ManufacturerSeeder extends Seeder
     {
         //
         $manufacturers_names = array(
+            'VAG',
+            'General Motors',
+            'FCA',
+            'Daimler',
             'BMW',
-            'Tesla',
-            'Hyndai',
-            'Mersedes',
-            'Volvo',
-            'Nissan',
-            'Audi',
-            'Range Rover',
-            'McLarren',
-            'Toyota',
         );
 
         foreach ($manufacturers_names as $manufacturer_name) {
-            Manufacturer::create([
+            Vehicle_manufacturer::create([
                 'name' => $manufacturer_name,
             ]);
         }

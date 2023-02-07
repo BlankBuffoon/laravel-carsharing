@@ -13,9 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('manufacturers', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+
+            $table->foreignId('bank_account_id')->constrained();
+
+            $table->integer('modification');
+            $table->dateTime('transaction_datetime');
+            $table->string('status');
+            $table->string('reason');
+
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('manufacturers');
+        Schema::dropIfExists('transactions');
     }
 };

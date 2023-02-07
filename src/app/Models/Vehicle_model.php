@@ -6,18 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Vehicle extends Model
+class Vehicle_model extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
-        'vehicle_model_id',
-        'status',
-        'mileage',
-        'manufacture_year',
-        'location',
-        'license_plate',
-        'price_at_halfhour',
+        'vehicle_brand_id',
+        'name',
     ];
 }

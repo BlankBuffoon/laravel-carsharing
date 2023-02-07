@@ -13,19 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vehicles', function (Blueprint $table) {
+        Schema::create('vehicle_models', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('manufacturer_id')->constrained();
-
-            $table->string('status')->deafult('На обслуживании');
-
-            $table->string('model');
-            $table->date('manufacture_date');
-            $table->string('number_plate')->unique();
-            $table->string('location');
-            $table->integer('price');
-
+            $table->foreignId('vehicle_brand_id')->constrained();
+            $table->string('name')->unique();
+            
             $table->timestamps();
             $table->softDeletes();
         });
@@ -38,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vehicles');
+        Schema::dropIfExists('vehicle_models');
     }
 };

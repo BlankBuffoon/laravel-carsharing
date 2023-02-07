@@ -6,18 +6,20 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Vehicle extends Model
+class Transaction extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
-        'vehicle_model_id',
+        'bank_account_id',
+        'modification',
+        'transaction_datetime',
         'status',
-        'mileage',
-        'manufacture_year',
-        'location',
-        'license_plate',
-        'price_at_halfhour',
+        'reason',
+    ];
+
+    protected $hidden = [
+        'modification',
     ];
 }
