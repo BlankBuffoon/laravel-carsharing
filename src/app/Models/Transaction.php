@@ -13,6 +13,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'bank_account_id',
+        'renter_id',
         'modification',
         'transaction_datetime',
         'status',

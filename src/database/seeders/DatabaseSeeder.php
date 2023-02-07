@@ -16,8 +16,15 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
+        $this->call(VehicleManufacturerSeeder::class);
+        $this->call(VehicleBrandSeeder::class);
+        $this->call(VehicleModelSeeder::class);
+        $this->call(VehicleSeeder::class);
+        $this->call(BankAccountSeeder::class);
+        $this->call(RenterSeeder::class);
+
         // $this->call(ManufacturerSeeder::class);
-        // $this->call(VehicleSeeder::class);
+        
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',

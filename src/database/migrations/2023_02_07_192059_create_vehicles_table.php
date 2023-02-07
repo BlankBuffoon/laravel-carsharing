@@ -24,7 +24,7 @@ return new class extends Migration
             $table->year('manufacture_year');
             $table->string('location');
             $table->string('license_plate')->unique();
-            $table->unsignedInteger('price_at_halfhour');
+            $table->unsignedInteger('price_at_hour');
 
             $table->timestamps();
             $table->softDeletes();

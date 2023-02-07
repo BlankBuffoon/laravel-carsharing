@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Renter;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,5 +16,6 @@ class RenterSeeder extends Seeder
     public function run()
     {
         //
+        Renter::factory(150)->create();
     }
 }

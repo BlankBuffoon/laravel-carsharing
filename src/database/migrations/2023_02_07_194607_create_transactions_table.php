@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
 
             $table->foreignId('bank_account_id')->constrained();
+            $table->foreignId('renter_id')->constrained();
 
             $table->integer('modification');
             $table->dateTime('transaction_datetime');
