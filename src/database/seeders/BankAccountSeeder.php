@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\BankAccount;
+use App\Models\Bank_account;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,6 +16,6 @@ class BankAccountSeeder extends Seeder
     public function run()
     {
         //
-        BankAccount::factory(50)->create();
+        Bank_account::factory(50)->create();
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Bank_account>
  */
-class BankAccountFactory extends Factory
+class Bank_accountFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,15 +17,15 @@ class BankAccountFactory extends Factory
     public function definition()
     {
         $status_arr = array(
-            'open',
-            'blocked',
-            'frozen',
-            'closed',
+            'Открыт',
+            'Заблокирован',
+            'Заморожен',
+            'Закрыт',
         );
 
         $types_arr = array (
-            'personal',
-            'corporated',
+            'Личный',
+            'Корпоративный',
         );
 
         return [
