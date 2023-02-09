@@ -29,13 +29,35 @@ class Renter extends Model
         'passport',
     ];
 
-    public function bank_accounts()
+    public function bankAccounts()
     {
-        return $this->belongsToMany(Bank_account::class);
+        return $this->belongsToMany(BankAccount::class, 'renters_bank_accounts', 'renter_id', 'bank_account_id');
     }
 
     public function fullname()
     {
         return $this->middle_name . ' ' . $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function scopeOfType($query, $type)
+    {
+        return $query->whereHas('BankAccount', function ($q) use ($type) {
+            $q->where('type', $type);
+        });
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($renter) {
+            $bankAccount = BankAccount::ofType('personal')->first();
+
+            if ($bankAccount && $bankAccount->renters->count() >= 1) {
+                return false;
+            }
+
+            $renter->bank_account_id = $bankAccount->id;
+        });
     }
 }

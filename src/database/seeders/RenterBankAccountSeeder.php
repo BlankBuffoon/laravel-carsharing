@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\BankAccount;
+use App\Models\RenterBankAccount;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class BankAccountSeeder extends Seeder
+class RenterBankAccountSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,6 +16,6 @@ class BankAccountSeeder extends Seeder
     public function run()
     {
         //
-        BankAccount::factory(50)->create();
+        RenterBankAccount::factory(150)->create();
     }
 }

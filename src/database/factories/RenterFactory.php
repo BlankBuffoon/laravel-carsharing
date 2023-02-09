@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Bank_account;
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+use App\Models\BankAccount;
 use App\Models\Renter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,45 +21,54 @@ class RenterFactory extends Factory
     public function definition()
     {
         $status_arr = array (
-            'Активен',
-            'Заморожен',
-            'Заблокирован',
-            'Премиум',
+            'active',
+            'frozen',
+            'blocked',
+            'premium',
         );
 
-        $bank_accounts = Bank_account::all()->shuffle()->first();
-        $matched_accounts = Renter::where('bank_account_id', $bank_accounts->id)->count();
+        return [
+            'bank_account_id' => function() {
+                $bank_account = BankAccount::all()->random();
+                if ($bank_account->type == 'personal') {
+                    // если счет личный, то проверяем, есть ли у него уже арендатор
+                    $renter = Renter::where('bank_account_id', $bank_account->id)->first();
+                    // если арендатор уже есть, то выбираем другой счет
+                    if ($renter) {
+                        return Renter::factory()->create()->bank_account_id;
+                    }
+                }
+                return $bank_account->id;
+            },
+            'first_name' => fake()->firstName(null),
+            'middle_name' => fake()->firstName(null),
+            'last_name' => fake()->lastName(),
+            'status' => fake()->randomElement($status_arr),
+            'phone_number' => fake()->numerify('##########'),
+            'email' => fake()->safeEmail(),
+            'passport' => fake()->unique()->numerify('#### ######'),
+        ];
 
-        if ($bank_accounts->type == 'Личный' && $matched_accounts == 0) {
-            return [
-                'bank_account_id' => $bank_accounts->id,
-                'first_name' => fake()->firstName(null),
-                'middle_name' => fake()->firstName(null),
-                'last_name' => fake()->lastName(),
-                'status' => fake()->randomElement($status_arr),
-                'phone_number' => fake()->numerify('##########'),
-                'email' => fake()->safeEmail(),
-                'passport' => fake()->numerify('#### ######'),
-            ];
-        } else {
-            $bank_accounts = Bank_account::all()->where('type', 'Корпоративный')->shuffle()->first();
+        // $busy_personal_accounts = Renter::all
+        // $bank_accounts = Bank_account::all()->random();
+        // $matched_accounts = Renter::where(['bank_account_id' => $bank_accounts->id])->get();
 
-            return [
-                'bank_account_id' => $bank_accounts->id,
-                'first_name' => fake()->firstName(null),
-                'middle_name' => fake()->firstName(null),
-                'last_name' => fake()->lastName(),
-                'status' => fake()->randomElement($status_arr),
-                'phone_number' => fake()->numerify('##########'),
-                'email' => fake()->safeEmail(),
-                'passport' => fake()->numerify('#### ######'),
-            ];
-        }
-
-
-        // foreach ($other_accounts as $account) {
+        // if ($bank_accounts->type == 'Личный' && $matched_accounts->isEmpty()) {
         //     return [
-        //         'bank_account_id' => $account->id,
+        //         'bank_account_id' => $bank_accounts->id,
+        //         'first_name' => fake()->firstName(null),
+        //         'middle_name' => fake()->firstName(null),
+        //         'last_name' => fake()->lastName(),
+        //         'status' => fake()->randomElement($status_arr),
+        //         'phone_number' => fake()->numerify('##########'),
+        //         'email' => fake()->safeEmail(),
+        //         'passport' => fake()->unique()->numerify('#### ######'),
+        //     ];
+        // } else {
+        //     $bank_accounts = Bank_account::all()->where('type', 'Корпоративный')->random();
+
+        //     return [
+        //         'bank_account_id' => $bank_accounts->id,
         //         'first_name' => fake()->firstName(null),
         //         'middle_name' => fake()->firstName(null),
         //         'last_name' => fake()->lastName(),
@@ -67,16 +78,5 @@ class RenterFactory extends Factory
         //         'passport' => fake()->numerify('#### ######'),
         //     ];
         // }
-
-        // return [
-        //     'bank_account_id' => fake()->randomElement($corporated_accounts)->id,
-        //     'first_name' => fake()->firstName(null),
-        //     'middle_name' => fake()->firstName(null),
-        //     'last_name' => fake()->lastName(),
-        //     'status' => fake()->randomElement($status_arr),
-        //     'phone_number' => fake()->numerify('##########'),
-        //     'email' => fake()->safeEmail(),
-        //     'passport' => fake()->numerify('#### ######'),
-        // ];
     }
 }

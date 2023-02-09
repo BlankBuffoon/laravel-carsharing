@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Vehicle_brand;
+use App\Models\VehicleBrand;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -26,7 +26,7 @@ class VehicleBrandSeeder extends Seeder
 
         foreach ($brands as $key => $value) {
             foreach ($value as $brand_name) {
-                Vehicle_brand::create([
+                VehicleBrand::create([
                     'name' => $brand_name,
                     'vehicle_manufacturer_id' => $key,
                 ]);

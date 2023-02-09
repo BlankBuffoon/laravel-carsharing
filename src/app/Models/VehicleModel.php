@@ -6,23 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Bank_account extends Model
+class VehicleModel extends Model
 {
     use HasFactory;
     use SoftDeletes;
 
     protected $fillable = [
-        'balance',
-        'status',
-        'type',
+        'vehicle_brand_id',
+        'name',
     ];
-
-    protected $hidden = [
-        'balance',
-    ];
-
-    public function renters()
-    {
-        return $this->belongsToMany(Renters::class);
-    }
 }

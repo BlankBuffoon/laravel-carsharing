@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\RenterBankAccount;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(VehicleSeeder::class);
         $this->call(BankAccountSeeder::class);
         $this->call(RenterSeeder::class);
+        $this->call(RenterBankAccountSeeder::class);
 
         // $this->call(ManufacturerSeeder::class);
         
