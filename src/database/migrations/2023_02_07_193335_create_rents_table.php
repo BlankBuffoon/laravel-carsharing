@@ -22,7 +22,7 @@ return new class extends Migration
             $table->dateTime('begin_datetime');
             $table->dateTime('end_datetime');
             $table->time('rented_time');
-            $table->unsignedInteger('totalPrice');
+            $table->unsignedInteger('total_price');
 
             $table->timestamps();
             $table->softDeletes();

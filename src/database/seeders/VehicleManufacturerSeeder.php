@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Vehicle_manufacturer;
+use App\Models\VehicleManufacturer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -25,7 +25,7 @@ class VehicleManufacturerSeeder extends Seeder
         );
 
         foreach ($manufacturers_names as $manufacturer_name) {
-            Vehicle_manufacturer::create([
+            VehicleManufacturer::create([
                 'name' => $manufacturer_name,
             ]);
         }

@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Bank_account;
+use App\Models\BankAccount;
 use App\Models\Renter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -25,7 +25,7 @@ class RenterFactory extends Factory
             'Премиум',
         );
 
-        $bank_accounts = Bank_account::all()->shuffle()->first();
+        $bank_accounts = BankAccount::all()->shuffle()->first();
         $matched_accounts = Renter::where('bank_account_id', $bank_accounts->id)->count();
 
         if ($bank_accounts->type == 'Личный' && $matched_accounts == 0) {
@@ -40,7 +40,7 @@ class RenterFactory extends Factory
                 'passport' => fake()->numerify('#### ######'),
             ];
         } else {
-            $bank_accounts = Bank_account::all()->where('type', 'Корпоративный')->shuffle()->first();
+            $bank_accounts = BankAccount::all()->where('type', 'Корпоративный')->shuffle()->first();
 
             return [
                 'bank_account_id' => $bank_accounts->id,
