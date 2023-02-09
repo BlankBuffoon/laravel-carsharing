@@ -21,7 +21,6 @@ return new class extends Migration
 
             $table->integer('modification');
             $table->dateTime('transaction_datetime');
-            $table->string('status');
             $table->string('reason');
 
             $table->timestamps();
