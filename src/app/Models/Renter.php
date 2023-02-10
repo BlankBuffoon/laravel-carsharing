@@ -29,9 +29,9 @@ class Renter extends Model
         'passport',
     ];
 
-    public function bank_accounts()
+    public function bills()
     {
-        return $this->belongsToMany(Bank_account::class);
+        return $this->belongsToMany(Bill::class, 'bill_renter', 'renter_id', 'bill_id');
     }
 
     public function fullname()
