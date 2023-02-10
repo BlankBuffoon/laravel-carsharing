@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('bank_account_id')->constrained();
+            $table->foreignId('bill_id')->constrained();
             $table->foreignId('renter_id')->constrained();
 
             $table->integer('modification');
