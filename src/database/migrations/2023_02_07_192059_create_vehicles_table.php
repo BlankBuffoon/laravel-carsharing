@@ -18,13 +18,13 @@ return new class extends Migration
 
             $table->foreignId('vehicle_model_id')->constrained();
 
-            $table->string('status')->deafult('На обслуживании');
+            $table->string('status')->deafult('maintenance')->comment("Статус ТС");
 
-            $table->unsignedInteger('mileage');
-            $table->year('manufacture_year');
-            $table->string('location');
-            $table->string('license_plate')->unique();
-            $table->unsignedInteger('price_at_hour');
+            $table->unsignedInteger('mileage')->comment("Пробег ТС");
+            $table->year('manufacture_year')->comment("Год производства ТС");
+            $table->string('location')->comment("Координаты текущего местоположения ТС");
+            $table->string('license_plate')->unique()->comment("Гос. номер ТС");
+            $table->unsignedInteger('price_at_minute')->comment("Цена за минуту аренды (в рублях)");
 
             $table->timestamps();
             $table->softDeletes();

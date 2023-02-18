@@ -19,9 +19,9 @@ return new class extends Migration
             $table->foreignId('bill_id')->constrained();
             $table->foreignId('renter_id')->constrained();
 
-            $table->integer('modification');
-            $table->dateTime('transaction_datetime');
-            $table->string('reason');
+            $table->integer('modification')->comment("Модификация операции со счетом (например. +100 или -100)");
+            $table->dateTime('transaction_datetime')->comment("Время и дата операции");
+            $table->string('reason')->comment("Причина проведения операции");
 
             $table->timestamps();
             $table->softDeletes();

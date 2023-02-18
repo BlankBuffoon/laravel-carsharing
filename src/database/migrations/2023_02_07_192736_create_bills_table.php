@@ -16,15 +16,16 @@ return new class extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
 
-            $table->integer('renters_count')->default(1);
-            $table->unsignedBigInteger('balance');
-            $table->string('status')->default('open');
-            $table->string('type')->default('pesonal');
+            $table->integer('renters_count')->default(1)->comment("Колличество пользователей связанных со счетом");
+            $table->unsignedBigInteger('balance')->comment("Баланс счета (в копейках)");
+            $table->string('status')->default('open')->comment("Статус счета");
+            $table->string('type')->default('pesonal')->comment("Тип счета");
 
             $table->timestamps();
             $table->softDeletes();
         });
 
+        // Промежуточная таблица для связи МкМ
         Schema::create('bill_renter', function (Blueprint $table) {
             $table->id();
 
