@@ -25,7 +25,7 @@ class BillFactory extends Factory
 
         return [
             //
-            'balance' => fake()->numberBetween(0, 1000000),
+            'balance' => fake()->numberBetween(0, 10000000),
             'status' => fake()->randomElement($status_arr),
         ];
     }
