@@ -17,9 +17,8 @@ class VehicleFactory extends Factory
     public function definition()
     {
         $status_arr = array(
-            'На обслуживании',
-            'В аренде',
-            'Ожидание',
+            'maintenance',
+            'expectation',
         );
 
         return [
@@ -29,7 +28,7 @@ class VehicleFactory extends Factory
             'manufacture_year' => fake()->year('now', '1990'),
             'location' => fake()->randomFloat(4, -35, -50) . ' ' . fake()->randomFloat(4, -35, -50),
             'license_plate' => fake()->bothify('?###??'),
-            'price_at_hour' => fake()->numberBetween(4500, 80000),
+            'price_at_minute' => fake()->numberBetween(75, 1350),
         ];
     }
 }

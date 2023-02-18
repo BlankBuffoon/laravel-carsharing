@@ -18,6 +18,6 @@ class Vehicle extends Model
         'manufacture_year',
         'location',
         'license_plate',
-        'price_at_hour',
+        'price_at_minute',
     ];
 }
