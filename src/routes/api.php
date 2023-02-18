@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ManufacturerController;
+use App\Http\Controllers\RentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +23,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::any('vehicles/get', [VehicleController::class, 'get']);
-Route::any('manufacturers/get', [ManufacturerController::class, 'get']);
+// Route::any('manufacturers/get', [ManufacturerController::class, 'get']);
+Route::any('rents/close/{id}', [RentController::class, 'close']);
+Route::get('rents/open', [RentController::class, 'open']);
