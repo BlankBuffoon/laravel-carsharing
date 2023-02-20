@@ -29,8 +29,17 @@ class BillRenter extends Model
         parent::boot();
 
         static::saving(function ($billRenter) {
-            // При сохранении связи тригерим сохранение связанного счета для обновления полей
+            // При сохранении связи тригерим сохранение для обновления полей
             $billRenter->bill->save();
+
+            // Если у пользователя нет счета по умолчанию,
+            // То первый добавленный счет автоматически назначается как счет по умолчанию
+            if ($billRenter->renter->default_bill == null) {
+                $billRenter->renter->default_bill = $billRenter->bill->id;
+                $billRenter->renter->save();
+            }
+
+            // $billRenter->renter->save();
         });
 
         static::deleted(function ($billRenter) {

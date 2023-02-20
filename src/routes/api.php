@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\RentController;
+use App\Http\Controllers\RenterController;
+use App\Http\Controllers\BillController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +24,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Getters
 Route::any('vehicles/get', [VehicleController::class, 'get']);
-// Route::any('manufacturers/get', [ManufacturerController::class, 'get']);
-Route::any('rents/close/{id}', [RentController::class, 'close']);
+
+// Other Routes
+Route::any('rents/close', [RentController::class, 'close']);
 Route::get('rents/open', [RentController::class, 'open']);
+
+Route::get('renters/set/defaultbill', [RenterController::class, 'setDefaultBill']);
+
+Route::get('bills/set/status', [BillController::class, 'setStatus']);
+
+Route::get('rents/get', [RentController::class, 'myMethod']);

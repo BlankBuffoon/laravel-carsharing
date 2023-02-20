@@ -24,17 +24,6 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-
-        // Промежуточная таблица для связи МкМ
-        Schema::create('bill_renter', function (Blueprint $table) {
-            $table->id();
-
-            $table->foreignID('bill_id')->constrained()->onDelete('cascade');
-            $table->foreignID('renter_id')->constrained()->onDelete('cascade');
-
-            $table->timestamps();
-            $table->softDeletes();
-        });
     }
 
     /**
@@ -44,7 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bill_renter');
         Schema::dropIfExists('bills');
     }
 };

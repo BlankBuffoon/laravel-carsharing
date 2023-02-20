@@ -34,8 +34,21 @@ class Renter extends Model
         return $this->belongsToMany(Bill::class, 'bill_renter', 'renter_id', 'bill_id');
     }
 
-    public function fullname()
+    protected static function boot()
+    {
+        parent::boot();
+
+        // При сохранении в модель
+        static::saving(function ($renter) {
+        });
+    }
+
+    public function getFullname()
     {
         return $this->middle_name . ' ' . $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function setDefaultBill($billId) {
+        $this->default_bill = $billId;
     }
 }

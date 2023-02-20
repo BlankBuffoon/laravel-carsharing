@@ -54,4 +54,8 @@ class Bill extends Model
             $this->type = 'personal';
         } 
     }
+
+    public function setStatus($status) {
+        $this->status = $status;
+    }
 }

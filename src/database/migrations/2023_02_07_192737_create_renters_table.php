@@ -16,6 +16,12 @@ return new class extends Migration
         Schema::create('renters', function (Blueprint $table) {
             $table->id();
 
+            $table->foreignId('default_bill')
+                ->nullable()
+                ->references('id')
+                ->on('bills')
+                ->comment("Выбранный пользователем счет по умолчанию");
+
             $table->string('first_name')->comment("Имя пользователя");
             $table->string('middle_name')->comment("Фамилия пользователя");
             $table->string('last_name')->comment("Отчество пользователя");

@@ -57,6 +57,10 @@ class Rent extends Model
         }
     }
 
+    public function transactionHadler() {
+        
+    }
+
     public function close() {
         $this->end_datetime = Carbon::now();
         $this->status = "closed";

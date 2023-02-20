@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Bill;
+use App\Models\BillRenter;
 use App\Models\Renter;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,6 +19,7 @@ class BillRenterFactory extends Factory
      */
     public function definition()
     {
+
         return [
             //
 
@@ -25,7 +27,7 @@ class BillRenterFactory extends Factory
                 return Renter::all()->random()->id;
             },
 
-            'bill_id' => function () {
+            'bill_id' => function () {                
                 return Bill::all()->random()->id;
             },
 

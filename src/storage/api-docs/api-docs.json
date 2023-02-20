@@ -1,0 +1,67 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Carsharing",
+        "description": "Документация к API системы каршеринга",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/rents/open": {
+            "get": {
+                "tags": [
+                    "Аренда"
+                ],
+                "summary": "Открыть аренду",
+                "description": "Открывает аренду",
+                "operationId": "/api/rents/open(GET)",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "renter",
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "description": "Идентификатор пользователя"
+                    },
+                    {
+                        "in": "query",
+                        "name": "vehicle",
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "description": "Идентификатор ТС"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Отображает существующего пользователя"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "rentOpenRequest": {
+                "properties": {
+                    "renter": {
+                        "description": "Идентификатор пользователя",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "vehicle": {
+                        "description": "Идентификатор ТС",
+                        "type": "integer",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
