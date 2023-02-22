@@ -30,8 +30,20 @@ Route::any('vehicles/get', [VehicleController::class, 'get']);
 // Other Routes
 
 // Rents
-Route::any('rents/close', [RentController::class, 'close']);
-Route::get('rents/open', [RentController::class, 'open']);
+Route::prefix('rents')->group(
+    function () {
+        Route::get('close', [RentController::class, 'close']);
+        Route::get('open', [RentController::class, 'open']);
+        Route::prefix('get')->group(
+            function () {
+                Route::get('/', [RentController::class, 'get']);
+                Route::get('status', [RentController::class, 'getStatus']);
+                Route::get('open', [RentController::class, 'getOpen']);
+                Route::get('closed', [RentController::class, 'getClosed']);
+            }
+        );
+    }
+);
 
 // Renters
 Route::get('renters/set/defaultbill', [RenterController::class, 'setDefaultBill']);

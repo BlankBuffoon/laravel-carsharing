@@ -65,6 +65,102 @@
                 }
             }
         },
+        "/api/rents/get": {
+            "get": {
+                "tags": [
+                    "Аренда"
+                ],
+                "summary": "Получить аренду",
+                "description": "Получить запись об аренде по идентификатору",
+                "operationId": "0252e7ae3cfdca3d28bc8d306a96d6b2",
+                "parameters": [
+                    {
+                        "name": "rentId",
+                        "in": "query",
+                        "description": "Идентификатор аренды",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает запись аренды"
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе"
+                    }
+                }
+            }
+        },
+        "/api/rents/get/status": {
+            "get": {
+                "tags": [
+                    "Аренда"
+                ],
+                "summary": "Получить статус аренды",
+                "description": "Получить статус аренды по идентификатору",
+                "operationId": "26369acea843594aa322ef21226b280d",
+                "parameters": [
+                    {
+                        "name": "rentId",
+                        "in": "query",
+                        "description": "Идентификатор аренды",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает статус аренды"
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе"
+                    }
+                }
+            }
+        },
+        "/api/rents/get/open": {
+            "get": {
+                "tags": [
+                    "Аренда"
+                ],
+                "summary": "Получить открытые аренды",
+                "description": "Получить аренды со статусом 'открытая'",
+                "operationId": "b8721de47a711a5660598649762e6f69",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список аренд"
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе"
+                    }
+                }
+            }
+        },
+        "/api/rents/get/close": {
+            "get": {
+                "tags": [
+                    "Аренда"
+                ],
+                "summary": "Получить закрытые аренды",
+                "description": "Получить аренды со статусом 'закрытая'",
+                "operationId": "d138eae810b0670b91e50cb7896163c8",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список аренд"
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе"
+                    }
+                }
+            }
+        },
         "/api/rents/open": {
             "get": {
                 "tags": [
@@ -75,7 +171,7 @@
                 "operationId": "ada34ef0ba5f3776e661a70dc40c244b",
                 "parameters": [
                     {
-                        "name": "renter",
+                        "name": "renterId",
                         "in": "query",
                         "description": "Идентификатор пользователя",
                         "required": true,
@@ -85,7 +181,7 @@
                         }
                     },
                     {
-                        "name": "vehicle",
+                        "name": "vehicleId",
                         "in": "query",
                         "description": "Идентификатор ТС",
                         "required": true,
@@ -97,31 +193,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Возвращает запись созданной аренды",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
+                        "description": "Возвращает запись созданной аренды"
                     },
                     "403": {
-                        "description": "Статус пользователя или ТС не позволяет открыть аренду",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
+                        "description": "Статус пользователя или ТС не позволяет открыть аренду"
                     },
                     "422": {
-                        "description": "Неверно переданы данные в запросе",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
+                        "description": "Неверно переданы данные в запросе"
                     }
                 }
             }
@@ -136,7 +214,7 @@
                 "operationId": "dec0209c65dff4087e6583b60e6839d0",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "rentId",
                         "in": "query",
                         "description": "Идентификатор аренды",
                         "required": true,
@@ -151,22 +229,10 @@
                         "description": "Возвращает запись закрытой аренды"
                     },
                     "403": {
-                        "description": "Статус аренды или статус ТС не позволяет закрыть аренду",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
+                        "description": "Статус аренды или статус ТС не позволяет закрыть аренду"
                     },
                     "422": {
-                        "description": "Неверно переданы данные в запросе",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": ""
-                            }
-                        }
+                        "description": "Неверно переданы данные в запросе"
                     }
                 }
             }
@@ -249,6 +315,16 @@
                 "type": "object"
             },
             "Rent/CloseRequest": {
+                "properties": {
+                    "rentId": {
+                        "description": "Идентификатор аренды",
+                        "type": "integer",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            },
+            "Rent/GetRequest": {
                 "properties": {
                     "rentId": {
                         "description": "Идентификатор аренды",
