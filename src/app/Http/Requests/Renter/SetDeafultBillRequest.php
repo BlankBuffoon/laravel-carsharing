@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Requests\Rent;
+namespace App\Http\Requests\Renter;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * @OA\Schema(
- *      schema="Rent/OpenRequest",
+ *      schema="Bill/SetDefaultBillRequest",
  *
- *      @OA\Property(property="renterId", type="integer", example="1", description="Идентификатор пользователя"),
- *      @OA\Property(property="vehicleId", type="integer", example="1", description="Идентификатор ТС"),
+ *      @OA\Property(property="renterId", type="integer", example="1", description="Идентификатор польщователя"),
+ *      @OA\Property(property="billId", type="integer", example="1", description="Идентификатор счета"),
  * )
  */
-class OpenRequest extends FormRequest
+class SetDeafultBillRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,7 +29,7 @@ class OpenRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules() : array
+    public function rules()
     {
         return [
             'renterId' => [
@@ -38,11 +38,11 @@ class OpenRequest extends FormRequest
                 'numeric',
                 'exists:renters,id',
             ],
-            'vehicleId' => [
+            'billId' => [
                 'required',
                 'integer',
                 'numeric',
-                'exists:vehicles,id',
+                'exists:bills,id',
             ]
         ];
     }

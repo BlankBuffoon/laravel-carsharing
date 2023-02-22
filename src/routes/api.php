@@ -28,11 +28,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::any('vehicles/get', [VehicleController::class, 'get']);
 
 // Other Routes
+
+// Rents
 Route::any('rents/close', [RentController::class, 'close']);
 Route::get('rents/open', [RentController::class, 'open']);
 
+// Renters
 Route::get('renters/set/defaultbill', [RenterController::class, 'setDefaultBill']);
 
+// Bills
 Route::get('bills/set/status', [BillController::class, 'setStatus']);
-
-Route::get('rents/get', [RentController::class, 'myMethod']);

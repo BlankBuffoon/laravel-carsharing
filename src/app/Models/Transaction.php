@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,15 +13,22 @@ class Transaction extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'bank_account_id',
+        'bill_id',
         'renter_id',
         'modification',
         'transaction_datetime',
-        'status',
-        'reason',
     ];
 
     protected $hidden = [
         'modification',
     ];
+
+    public function createRecord(Bill $bill, Renter $renter, int $modification) {
+        $this->bill_id = $bill->id;
+        $this->renter_id = $renter->id;
+        $this->modification = $modification;
+        $this->transaction_datetime = Carbon::now();
+
+        $this->save();
+    }
 }

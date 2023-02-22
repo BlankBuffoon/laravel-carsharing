@@ -58,16 +58,17 @@ class Rent extends Model
     }
 
     public function transactionHadler() {
-        
+
     }
 
     public function close() {
         $this->end_datetime = Carbon::now();
-        $this->status = "closed";
-        $this->vehicle->status = "expectation";
         $this->calculateRentedTime();
         $this->calculateTotalPrice();
+        $this->status = "closed";
+        $this->vehicle->status = "expectation";
 
+        $this->vehicle->update();
         $this->update();
     }
 
@@ -78,8 +79,12 @@ class Rent extends Model
         $this->begin_datetime = Carbon::now();
 
         $this->vehicle->status = 'rented';
-        
+
         $this->vehicle->save();
         $this->save();
+    }
+
+    public function getRenter() {
+        return $this->renter();
     }
 }

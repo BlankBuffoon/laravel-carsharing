@@ -44,18 +44,27 @@ class Bill extends Model
 
     public function updateBillType() {
         // Обновляем статус аккаунта
-        if ($this->renters_count > 1) 
+        if ($this->renters_count > 1)
         {
             $this->type = 'corporated';
-        } 
+        }
 
-        elseif ($this->renters_count == 1) 
+        elseif ($this->renters_count == 1)
         {
             $this->type = 'personal';
-        } 
+        }
+
+        elseif ($this->renters_count == 0) {
+            $this->status = 'blocked';
+        }
     }
 
     public function setStatus($status) {
         $this->status = $status;
+    }
+
+    public function modificateBalance($modification) {
+        $this->balance += $modification;
+        $this->save();
     }
 }

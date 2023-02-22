@@ -38,7 +38,7 @@ class RentFactory extends Factory
                     return Vehicle::factory()->create()->id;
                 }
             },
-            'renter_id' => Renter::all()->random(),
+            'renter_id' => Renter::all()->whereNotNull('default_bill')->random(),
             'status' => $status,
             'begin_datetime' => $beginDateTime,
             'end_datetime' => function () use ($status, $endDateTime) {

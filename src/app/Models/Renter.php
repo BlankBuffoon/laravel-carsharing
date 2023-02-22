@@ -12,8 +12,9 @@ class Renter extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'bank_account_id',
+        'bill_id',
         'first_name',
+        'default_bill',
         'middle_name',
         'last_name',
         'status',
@@ -23,7 +24,7 @@ class Renter extends Model
     ];
 
     protected $hidden = [
-        'bank_account_id',
+        'bill_id',
         'email',
         'phone_number',
         'passport',
@@ -32,6 +33,10 @@ class Renter extends Model
     public function bills()
     {
         return $this->belongsToMany(Bill::class, 'bill_renter', 'renter_id', 'bill_id');
+    }
+
+    public function default_bill() {
+        return $this->belongsTo(Bill::class);
     }
 
     protected static function boot()

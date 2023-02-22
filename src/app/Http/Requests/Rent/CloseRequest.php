@@ -2,9 +2,15 @@
 
 namespace App\Http\Requests\Rent;
 
-use App\Models\Rent;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @OA\Schema(
+ *      schema="Rent/CloseRequest",
+ *
+ *      @OA\Property(property="rentId", type="integer", example="1", description="Идентификатор аренды"),
+ * )
+ */
 class CloseRequest extends FormRequest
 {
     /**
@@ -22,24 +28,14 @@ class CloseRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules() : array
     {
         return [
-            'id' => [
+            'rentId' => [
                 'required',
                 'integer',
                 'numeric',
                 'exists:rents,id',
-                'bail',
-                function ($attribute, $value, $fail) {
-                    $rent = Rent::find($value);
-                    if ($rent->status != 'open') {
-                        $fail("Rent status in not open");
-                    }
-                    if ($rent->vehicle->status != 'rented') {
-                        $fail("Vehicle status in not rented");
-                    }
-                }
             ]
         ];
     }
