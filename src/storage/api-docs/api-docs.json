@@ -6,40 +6,226 @@
         "version": "1.0"
     },
     "paths": {
+        "/api/bills/set/status": {
+            "get": {
+                "tags": [
+                    "Счета"
+                ],
+                "summary": "Изменить статус счета",
+                "description": "Изменяет статус выбранного счета",
+                "operationId": "639f9a957a1bf73f19cbe20f84a6a0eb",
+                "parameters": [
+                    {
+                        "name": "billId",
+                        "in": "query",
+                        "description": "Идентификатор Счета",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Статус",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "blocked"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает измененный счет"
+                    },
+                    "400": {
+                        "description": "Переданный статус неверен",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "error": "Incorrect status 'qwerty'"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе или произошла ошибка при изменении статуса счета",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "error": "Bill already has 'open' status"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/rents/open": {
             "get": {
                 "tags": [
                     "Аренда"
                 ],
                 "summary": "Открыть аренду",
-                "description": "Открывает аренду",
-                "operationId": "/api/rents/open(GET)",
+                "description": "Взять машину в аренду для заданного пользователя и открыть аренду",
+                "operationId": "ada34ef0ba5f3776e661a70dc40c244b",
                 "parameters": [
                     {
-                        "in": "query",
                         "name": "renter",
+                        "in": "query",
+                        "description": "Идентификатор пользователя",
+                        "required": true,
                         "schema": {
                             "type": "integer",
-                            "example": 1
-                        },
-                        "description": "Идентификатор пользователя"
+                            "example": "1"
+                        }
                     },
                     {
-                        "in": "query",
                         "name": "vehicle",
+                        "in": "query",
+                        "description": "Идентификатор ТС",
+                        "required": true,
                         "schema": {
                             "type": "integer",
-                            "example": 1
-                        },
-                        "description": "Идентификатор ТС"
+                            "example": "1"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Отображает существующего пользователя"
+                        "description": "Возвращает запись созданной аренды",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
                     },
-                    "401": {
-                        "description": "Unauthorized"
+                    "403": {
+                        "description": "Статус пользователя или ТС не позволяет открыть аренду",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/rents/close": {
+            "get": {
+                "tags": [
+                    "Аренда"
+                ],
+                "summary": "Закрыть аренду",
+                "description": "Закрыть аренду по идентификатору",
+                "operationId": "dec0209c65dff4087e6583b60e6839d0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Идентификатор аренды",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает запись закрытой аренды"
+                    },
+                    "403": {
+                        "description": "Статус аренды или статус ТС не позволяет закрыть аренду",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": ""
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/renters/set/defaultbill": {
+            "get": {
+                "tags": [
+                    "Пользователи"
+                ],
+                "summary": "Изменить счет по умолчанию",
+                "description": "Изменяет выбранный по умолчанию счет для конкретного пользователя",
+                "operationId": "529b241002479562e3320b8469ae3949",
+                "parameters": [
+                    {
+                        "name": "renterId",
+                        "in": "query",
+                        "description": "Идентификатор пользователя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    },
+                    {
+                        "name": "billId",
+                        "in": "query",
+                        "description": "Идентификатор счета",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает пользователя"
+                    },
+                    "400": {
+                        "description": "Статус счета не позволяет выбрать его основным",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "error": "Bill with status 'blocked' cannot be selected as the default bill"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе или произошла ошибка при изменении статуса счета",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "error": "Renter has not bill with id '1'"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -47,15 +233,55 @@
     },
     "components": {
         "schemas": {
-            "rentOpenRequest": {
+            "Bill/SetStatusRequest": {
                 "properties": {
-                    "renter": {
+                    "billId": {
+                        "description": "Идентификатор Счета",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "status": {
+                        "description": "Статус",
+                        "type": "string",
+                        "example": "open"
+                    }
+                },
+                "type": "object"
+            },
+            "Rent/CloseRequest": {
+                "properties": {
+                    "rentId": {
+                        "description": "Идентификатор аренды",
+                        "type": "integer",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            },
+            "Rent/OpenRequest": {
+                "properties": {
+                    "renterId": {
                         "description": "Идентификатор пользователя",
                         "type": "integer",
                         "example": "1"
                     },
-                    "vehicle": {
+                    "vehicleId": {
                         "description": "Идентификатор ТС",
+                        "type": "integer",
+                        "example": "1"
+                    }
+                },
+                "type": "object"
+            },
+            "Bill/SetDefaultBillRequest": {
+                "properties": {
+                    "renterId": {
+                        "description": "Идентификатор польщователя",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "billId": {
+                        "description": "Идентификатор счета",
                         "type": "integer",
                         "example": "1"
                     }
