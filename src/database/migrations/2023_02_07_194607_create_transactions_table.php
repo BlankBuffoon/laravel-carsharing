@@ -21,6 +21,7 @@ return new class extends Migration
 
             $table->integer('modification')->comment("Модификация операции со счетом (например. +100 или -100)");
             $table->dateTime('transaction_datetime')->comment("Время и дата операции");
+            $table->string('reason')->nullable()->comment('Причина изменения счета');
 
             $table->timestamps();
             $table->softDeletes();
