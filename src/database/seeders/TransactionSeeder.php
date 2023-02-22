@@ -23,6 +23,7 @@ class TransactionSeeder extends Seeder
                 "renter_id" => $rent->renter_id,
                 "modification" => $rent->total_price * -1,
                 "transaction_datetime" => $rent->end_datetime,
+                "reason" => 'payment for rent №' . $rent->id,
             ]);
         }
     }

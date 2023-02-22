@@ -25,7 +25,7 @@ class RentService
     /**
      * Получает статус пользователя
      *
-     * @param \App\Models\Rent $renter
+     * @param Rent $renter Пользователь
      * @return string
      */
     public function getStatus(Rent $rent) : string {
@@ -35,8 +35,8 @@ class RentService
     /**
      * Получает статус пользователя
      *
-     * @param \App\Models\Rent $renter
-     * @param array $statuses
+     * @param Rent $renter Пользователь
+     * @param array $statuses Статус(ы) для поиска
      * @return string
      */
     public function checkIsStatus(Rent $rent, array $statuses) : bool {
@@ -112,9 +112,9 @@ class RentService
         $rent->close();
 
         $total_price = $rent->total_price;
+        $reason = "payment for rent №" . $rent->id;
 
-        $this->billService->modificateBalance($bill, -$total_price);
-        $this->transactionService->createRecord($bill, $renter, -$total_price);
+        $this->billService->modificateBalance($bill, $renter, -$total_price, $reason);
 
         return response()->json([$rent], 200);
     }

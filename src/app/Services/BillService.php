@@ -8,6 +8,12 @@ use Illuminate\Http\JsonResponse;
 
 class BillService
 {
+    protected $transactionService;
+
+    public function __construct(TransactionService $transactionService)
+    {
+        $this->transactionService = $transactionService;
+    }
     /**
      * Получает статус счета
      *
@@ -63,7 +69,16 @@ class BillService
         return response()->json([$bill], 200);
     }
 
-    public function modificateBalance(Bill $bill, int $modification) {
+     /**
+     * Изменяет баланс счета
+     *
+     * @param Bill $bill Связанный счет
+     * @param Renter $renter Инициатор изменения
+     * @param int $modification Изменение (положительное или отрицатеьлное число) в копейках
+     * @param string $reason Причина изменения
+     */
+    public function modificateBalance(Bill $bill, Renter $renter, int $modification, string $reason = 'not specified') {
         $bill->modificateBalance($modification);
+        $this->transactionService->createRecord($bill, $renter, $modification, $reason);
     }
 }

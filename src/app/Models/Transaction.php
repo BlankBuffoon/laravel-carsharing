@@ -23,11 +23,20 @@ class Transaction extends Model
         'modification',
     ];
 
-    public function createRecord(Bill $bill, Renter $renter, int $modification) {
+    /**
+     * Создает запись в истории операций
+     * 
+     * @param Bill $bill
+     * @param Renter $renter
+     * @param int $modification
+     * @param string $reason
+     */
+    public function createRecord(Bill $bill, Renter $renter, int $modification, string $reason) {
         $this->bill_id = $bill->id;
         $this->renter_id = $renter->id;
         $this->modification = $modification;
         $this->transaction_datetime = Carbon::now();
+        $this->reason = $reason;
 
         $this->save();
     }

@@ -67,6 +67,12 @@ class RenterService
         return response()->json([$renter], 200);
     }
 
+     /**
+     * Проверяет есть ли у пользователя счет по умолчанию
+     *
+     * @param Renter $renter
+     * @return bool
+     */
     public function checkDefaultBill(Renter $renter) : bool {
         if ($renter->default_bill()) {
             return true;
@@ -75,6 +81,12 @@ class RenterService
         }
     }
 
+    /**
+     * Проверяет баланс у пользователя на счету по умолчанию
+     *
+     * @param Renter $renter
+     * @return int
+     */
     public function checkBalanceOnDefaultBill(Renter $renter) : int {
         if ($renter->default_bill()) {
             return Bill::find($renter->default_bill())->balance;
