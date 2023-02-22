@@ -24,9 +24,10 @@ class DatabaseSeeder extends Seeder
         $this->call(RenterSeeder::class);
         $this->call(BillRenterSeeder::class);
         $this->call(RentSeeder::class);
+        $this->call(TransactionSeeder::class);
 
         // $this->call(ManufacturerSeeder::class);
-        
+
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
