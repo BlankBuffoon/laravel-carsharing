@@ -95,18 +95,18 @@
                 }
             }
         },
-        "/api/rents/get/status": {
+        "/api/rents/get/status/{id}": {
             "get": {
                 "tags": [
                     "Аренда"
                 ],
                 "summary": "Получить статус аренды",
                 "description": "Получить статус аренды по идентификатору",
-                "operationId": "26369acea843594aa322ef21226b280d",
+                "operationId": "0c902b493366778884dcf9c5cacdd255",
                 "parameters": [
                     {
-                        "name": "rentId",
-                        "in": "query",
+                        "name": "id",
+                        "in": "path",
                         "description": "Идентификатор аренды",
                         "required": true,
                         "schema": {
@@ -117,10 +117,18 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Возвращает статус аренды"
+                        "description": "Возвращает статус аренды",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "closed"
+                                }
+                            }
+                        }
                     },
-                    "422": {
-                        "description": "Неверно переданы данные в запросе"
+                    "404": {
+                        "description": "Неверно передан идентификатор"
                     }
                 }
             }
@@ -162,35 +170,23 @@
             }
         },
         "/api/rents/open": {
-            "get": {
+            "post": {
                 "tags": [
                     "Аренда"
                 ],
                 "summary": "Открыть аренду",
                 "description": "Взять машину в аренду для заданного пользователя и открыть аренду",
-                "operationId": "ada34ef0ba5f3776e661a70dc40c244b",
-                "parameters": [
-                    {
-                        "name": "renterId",
-                        "in": "query",
-                        "description": "Идентификатор пользователя",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": "1"
-                        }
-                    },
-                    {
-                        "name": "vehicleId",
-                        "in": "query",
-                        "description": "Идентификатор ТС",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "example": "1"
+                "operationId": "3176259ed0e7874716f8aa2de3e72d8a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RentOpenRequest"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "Возвращает запись созданной аренды"
@@ -472,17 +468,7 @@
                 },
                 "type": "object"
             },
-            "Rent/GetRequest": {
-                "properties": {
-                    "rentId": {
-                        "description": "Идентификатор аренды",
-                        "type": "integer",
-                        "example": "1"
-                    }
-                },
-                "type": "object"
-            },
-            "Rent/OpenRequest": {
+            "RentOpenRequest": {
                 "properties": {
                     "renterId": {
                         "description": "Идентификатор пользователя",

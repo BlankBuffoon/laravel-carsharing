@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * @OA\Schema(
- *      schema="Rent/OpenRequest",
+ *      schema="RentOpenRequest",
  *
  *      @OA\Property(property="renterId", type="integer", example="1", description="Идентификатор пользователя"),
  *      @OA\Property(property="vehicleId", type="integer", example="1", description="Идентификатор ТС"),

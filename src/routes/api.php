@@ -33,11 +33,11 @@ Route::any('vehicles/get', [VehicleController::class, 'get']);
 Route::prefix('rents')->group(
     function () {
         Route::get('close', [RentController::class, 'close']);
-        Route::get('open', [RentController::class, 'open']);
+        Route::post('open', [RentController::class, 'open']);
         Route::prefix('get')->group(
             function () {
                 Route::get('/', [RentController::class, 'get']);
-                Route::get('status', [RentController::class, 'getStatus']);
+                Route::get('status/{id}', [RentController::class, 'getStatus']);
                 Route::get('open', [RentController::class, 'getOpen']);
                 Route::get('closed', [RentController::class, 'getClosed']);
             }

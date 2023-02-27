@@ -35,10 +35,6 @@ class Renter extends Model
         return $this->belongsToMany(Bill::class, 'bill_renter', 'renter_id', 'bill_id');
     }
 
-    public function default_bill() {
-        return $this->belongsTo(Bill::class);
-    }
-
     protected static function boot()
     {
         parent::boot();

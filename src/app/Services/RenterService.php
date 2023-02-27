@@ -74,7 +74,7 @@ class RenterService
      * @return bool
      */
     public function checkDefaultBill(Renter $renter) : bool {
-        if ($renter->default_bill()) {
+        if ($renter->default_bill) {
             return true;
         } else {
             return false;
@@ -88,8 +88,8 @@ class RenterService
      * @return int
      */
     public function checkBalanceOnDefaultBill(Renter $renter) : int {
-        if ($renter->default_bill()) {
-            return Bill::find($renter->default_bill())->balance;
+        if ($renter->default_bill) {
+            return Bill::find($renter->default_bill)->balance;
         } else {
             throw new \Exception("Renter have not a default bill");
         }

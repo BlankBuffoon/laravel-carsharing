@@ -6,6 +6,7 @@ use App\Http\Requests\Rent\CloseRequest;
 use App\Http\Requests\Rent\GetRequest;
 use App\Http\Requests\Rent\OpenRequest;
 use App\Models\Rent;
+use App\Models\Renter;
 use App\Services\RentService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -51,14 +52,16 @@ class RentController extends Controller
     }
 
     /**
+     * Получает статус аренды
+     *
      * @OA\Get(
-     *      path="/api/rents/get/status",
+     *      path="/api/rents/get/status/{id}",
      *      summary="Получить статус аренды",
      *      description="Получить статус аренды по идентификатору",
      *      tags={"Аренда"},
      *      @OA\Parameter(
-     *          name="rentId",
-     *          in="query",
+     *          name="id",
+     *          in="path",
      *          description="Идентификатор аренды",
      *          required=true,
      *          @OA\Schema(
@@ -69,21 +72,22 @@ class RentController extends Controller
      *      @OA\Response(
      *          response="200",
      *          description="Возвращает статус аренды",
+     *          @OA\JsonContent(
+     *              example={"status": "closed"}
+     *          ),
      *      ),
      *      @OA\Response(
-     *          response="422",
-     *          description="Неверно переданы данные в запросе",
+     *          response="404",
+     *          description="Неверно передан идентификатор",
      *      )
      * ),
      *
-     * @param OpenRequest $request
      * @param RentService $service
+     * @param int $id
      * @return JsonResponse
      */
-    public function getStatus(GetRequest $request, RentService $service) : JsonResponse {
-        $data = $request->validated();
-
-        $rent = Rent::find($data['rentId']);
+    public function getStatus(RentService $service, int $id) : JsonResponse {
+        $rent = Rent::findOrFail($id);
 
         return response()->json(['status' => $service->getStatus($rent)], 200);
     }
@@ -137,30 +141,14 @@ class RentController extends Controller
     }
 
     /**
-     * @OA\Get(
+     * @OA\Post(
      *      path="/api/rents/open",
      *      summary="Открыть аренду",
      *      description="Взять машину в аренду для заданного пользователя и открыть аренду",
      *      tags={"Аренда"},
-     *      @OA\Parameter(
-     *          name="renterId",
-     *          in="query",
-     *          description="Идентификатор пользователя",
+     *      @OA\RequestBody(
      *          required=true,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example="1"
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="vehicleId",
-     *          in="query",
-     *          description="Идентификатор ТС",
-     *          required=true,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example="1"
-     *          )
+     *          @OA\JsonContent(ref="#/components/schemas/RentOpenRequest")
      *      ),
      *      @OA\Response(
      *          response="200",
@@ -182,7 +170,7 @@ class RentController extends Controller
      */
     public function open(OpenRequest $request, RentService $service) {
         $data = $request->validated();
-
+        // Проверить ошибку для vehicleID = 1
         return $service->open($data);
     }
 

@@ -54,8 +54,8 @@ class RentService
      * @return JsonResponce
      */
     public function open(array $data) : JsonResponse {
-        $renter = Renter::find($data['renterId']);
-        $vehicle = Vehicle::find($data['vehicleId']);
+        $renter = Renter::findOrFail($data['renterId']);
+        $vehicle = Vehicle::findOrFail($data['vehicleId']);
 
         $badRenterStatuses = array(
             'frozen',
