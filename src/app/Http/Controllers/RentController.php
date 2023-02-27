@@ -39,7 +39,7 @@ class RentController extends Controller
      *      )
      * ),
      *
-     * @param OpenRequest $request
+     * @param GetRequest $request
      * @return JsonResponse
      */
     public function get(GetRequest $request) : JsonResponse {
