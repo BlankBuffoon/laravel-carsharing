@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * @OA\Schema(
  *      schema="Bill/SetDefaultBillRequest",
  *
- *      @OA\Property(property="renterId", type="integer", example="1", description="Идентификатор польщователя"),
+ *      @OA\Property(property="renterId", type="integer", example="1", description="Идентификатор пользователя"),
  *      @OA\Property(property="billId", type="integer", example="1", description="Идентификатор счета"),
  * )
  */

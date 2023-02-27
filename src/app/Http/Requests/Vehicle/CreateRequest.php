@@ -4,6 +4,19 @@ namespace App\Http\Requests\Vehicle;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @OA\Schema(
+ *      schema="VehicleCreateRequest",
+ *
+ *      @OA\Property(property="vehicle_model_id", type="integer", example="1", description="Идентификатор модели ТС"),
+ *      @OA\Property(property="status", type="string", example="maintenance", description="Статус ТС"),
+ *      @OA\Property(property="mileage", type="integer", example="4300", description="Пробег ТС"),
+ *      @OA\Property(property="manufacture_year", type="integer", example="2010", description="Год производства ТС"),
+ *      @OA\Property(property="location", type="string", example="-41.201 -59.8371", description="Координаты ТС"),
+ *      @OA\Property(property="license_plate", type="string", example="А999МР 179", description="Гос. Номер ТС"),
+ *      @OA\Property(property="price_at_minute", type="integer", example="400000", description="Цена в копейках за минуту аренды ТС"),
+ * )
+ */
 class CreateRequest extends FormRequest
 {
     /**

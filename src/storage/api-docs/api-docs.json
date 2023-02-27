@@ -295,6 +295,154 @@
                     }
                 }
             }
+        },
+        "/api/vehicles/": {
+            "get": {
+                "tags": [
+                    "Машины"
+                ],
+                "summary": "Получить все ТС",
+                "description": "Получить список ТС",
+                "operationId": "b430f89e14ef2ecbccbc97555596c220",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список ТС"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Машины"
+                ],
+                "summary": "Создать ТС",
+                "description": "Создает новое ТС и возвращает ее",
+                "operationId": "3374dda446c2715f7929be3603278693",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VehicleCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Возвращает запись созданного ТС"
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе"
+                    }
+                }
+            }
+        },
+        "/api/vehicles/{id}": {
+            "get": {
+                "tags": [
+                    "Машины"
+                ],
+                "summary": "Получить ТС",
+                "description": "Получает ТС по идентификатору и возвращает его",
+                "operationId": "0185374b4b707b85ca8a97a6f5f366e1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Идентификатор ТС",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает запись ТС"
+                    },
+                    "404": {
+                        "description": "ТС не найдено"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Машины"
+                ],
+                "summary": "Удалить ТС",
+                "description": "Удаляет запись о ТС",
+                "operationId": "3442f99c22f47affb335443ef012e712",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Идентификатор ТС",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает сообщение об успешном удалении",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Succesfully destroyed"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Неверно передан идентификатор ТС"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Машины"
+                ],
+                "summary": "Обновить ТС",
+                "description": "Обновляет запись о ТС и возвращает ее",
+                "operationId": "c8cf5f0cacef168664d0a731533e0ef9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Идентификатор ТС",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VehicleUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Возвращает запись ТС"
+                    },
+                    "404": {
+                        "description": "Неверно передан идентификатор ТС"
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -352,7 +500,7 @@
             "Bill/SetDefaultBillRequest": {
                 "properties": {
                     "renterId": {
-                        "description": "Идентификатор польщователя",
+                        "description": "Идентификатор пользователя",
                         "type": "integer",
                         "example": "1"
                     },
@@ -360,6 +508,86 @@
                         "description": "Идентификатор счета",
                         "type": "integer",
                         "example": "1"
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleCreateRequest": {
+                "properties": {
+                    "vehicle_model_id": {
+                        "description": "Идентификатор модели ТС",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "status": {
+                        "description": "Статус ТС",
+                        "type": "string",
+                        "example": "maintenance"
+                    },
+                    "mileage": {
+                        "description": "Пробег ТС",
+                        "type": "integer",
+                        "example": "4300"
+                    },
+                    "manufacture_year": {
+                        "description": "Год производства ТС",
+                        "type": "integer",
+                        "example": "2010"
+                    },
+                    "location": {
+                        "description": "Координаты ТС",
+                        "type": "string",
+                        "example": "-41.201 -59.8371"
+                    },
+                    "license_plate": {
+                        "description": "Гос. Номер ТС",
+                        "type": "string",
+                        "example": "А999МР 179"
+                    },
+                    "price_at_minute": {
+                        "description": "Цена в копейках за минуту аренды ТС",
+                        "type": "integer",
+                        "example": "400000"
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleUpdateRequest": {
+                "properties": {
+                    "vehicle_model_id": {
+                        "description": "Идентификатор модели ТС",
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "status": {
+                        "description": "Статус ТС",
+                        "type": "string",
+                        "example": "maintenance"
+                    },
+                    "mileage": {
+                        "description": "Пробег ТС",
+                        "type": "integer",
+                        "example": "4300"
+                    },
+                    "manufacture_year": {
+                        "description": "Год производства ТС",
+                        "type": "integer",
+                        "example": "2010"
+                    },
+                    "location": {
+                        "description": "Координаты ТС",
+                        "type": "string",
+                        "example": "-41.201 -59.8371"
+                    },
+                    "license_plate": {
+                        "description": "Гос. Номер ТС",
+                        "type": "string",
+                        "example": "А999МР 179"
+                    },
+                    "price_at_minute": {
+                        "description": "Цена в копейках за минуту аренды ТС",
+                        "type": "integer",
+                        "example": "400000"
                     }
                 },
                 "type": "object"
