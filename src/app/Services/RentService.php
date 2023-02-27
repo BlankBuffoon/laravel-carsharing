@@ -81,7 +81,7 @@ class RentService
         $rent = new Rent;
         $rent->open($renter->id, $vehicle->id);
 
-        return response()->json([$rent], 200);
+        return response()->json($rent, 200);
     }
 
     /**
@@ -116,6 +116,6 @@ class RentService
 
         $this->billService->modificateBalance($bill, $renter, -$total_price, $reason);
 
-        return response()->json([$rent], 200);
+        return response()->json($rent, 200);
     }
 }
