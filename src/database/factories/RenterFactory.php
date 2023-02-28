@@ -2,8 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\BankAccount;
-use App\Models\Renter;
+use App\Enums\Renter\RenterStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,18 +17,11 @@ class RenterFactory extends Factory
      */
     public function definition()
     {
-        $status_arr = array (
-            'active',
-            'frozen',
-            'blocked',
-            'premium',
-        );
-
         return [
             'first_name' => fake()->firstName(null),
             'middle_name' => fake()->firstName(null),
             'last_name' => fake()->lastName(),
-            'status' => fake()->randomElement($status_arr),
+            'status' => RenterStatus::getRandomValue(),
             'phone_number' => fake()->unique()->numerify('79########'),
             'email' => fake()->unique()->safeEmail(),
             'passport' => fake()->unique()->numerify('#### ######'),

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Rent\RentStatus;
+use App\Enums\Vehicle\VehicleStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -61,8 +63,8 @@ class Rent extends Model
         $this->end_datetime = Carbon::now();
         $this->calculateRentedTime();
         $this->calculateTotalPrice();
-        $this->status = "closed";
-        $this->vehicle->status = "expectation";
+        $this->status = RentStatus::Closed;
+        $this->vehicle->status = VehicleStatus::Expectation;
 
         $this->vehicle->update();
         $this->update();
@@ -73,7 +75,7 @@ class Rent extends Model
         $this->renter_id = $renterId;
         $this->begin_datetime = Carbon::now();
 
-        $this->vehicle->status = 'rented';
+        $this->vehicle->status = VehicleStatus::Rented;
 
         $this->vehicle->save();
         $this->save();

@@ -85,13 +85,13 @@ class RenterService
      * Проверяет баланс у пользователя на счету по умолчанию
      *
      * @param Renter $renter
-     * @return int
+     * @return mixed
      */
-    public function checkBalanceOnDefaultBill(Renter $renter) : int {
+    public function checkBalanceOnDefaultBill(Renter $renter) : mixed {
         if ($renter->default_bill) {
             return Bill::find($renter->default_bill)->balance;
         } else {
-            throw new \Exception("Renter have not a default bill");
+            return null;
         }
     }
 }

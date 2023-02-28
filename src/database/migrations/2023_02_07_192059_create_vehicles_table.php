@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Vehicle\VehicleStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,7 +19,7 @@ return new class extends Migration
 
             $table->foreignId('vehicle_model_id')->constrained();
 
-            $table->string('status')->default('maintenance')->comment("Статус ТС");
+            $table->enum('status', VehicleStatus::getValues())->default(VehicleStatus::Maintenance)->comment("Статус ТС");
 
             $table->unsignedInteger('mileage')->comment("Пробег ТС");
             $table->year('manufacture_year')->comment("Год производства ТС");

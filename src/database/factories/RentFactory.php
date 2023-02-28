@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\Rent\RentStatus;
+use App\Enums\Vehicle\VehicleStatus;
 use App\Models\Renter;
 use App\Models\Transaction;
 use App\Models\Vehicle;
@@ -20,20 +22,17 @@ class RentFactory extends Factory
     public function definition()
     {
 
-        $statuses = array(
-            'open',
-            'closed'
-        );
-
+        // Генерируем дату начала аренды с диапазоном в 365 дней
         $beginDateTime = fake()->dateTimeBetween($startDate = '-365 days', $endDate = 'now', $timezone = null);
+        // Генерируем дату конца аренды, где максимальное значение - 1 день от начала
         $endDateTime = fake()->dateTimeInInterval($beginDateTime, $endDate = '+1 days', $timezone = null);
 
-        $status = $statuses[rand(0, 1)];
+        $status = RentStatus::getRandomValue();
 
         return [
             'vehicle_id' => function () use ($status) {
                 if ($status == 'open') {
-                    return Vehicle::factory()->create(['status' => 'rented'])->id;
+                    return Vehicle::factory()->create(['status' => VehicleStatus::Rented])->id;
                 } else {
                     return Vehicle::factory()->create()->id;
                 }
@@ -42,7 +41,7 @@ class RentFactory extends Factory
             'status' => $status,
             'begin_datetime' => $beginDateTime,
             'end_datetime' => function () use ($status, $endDateTime) {
-                if ($status === "open") {
+                if ($status === RentStatus::Open) {
                     return null;
                 } else {
                     return $endDateTime;

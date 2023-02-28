@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Enums\Rent\RentStatus;
+use App\Enums\Renter\RenterStatus;
+use App\Enums\Vehicle\VehicleStatus;
 use App\Models\Bill;
 use App\Models\Rent;
 use App\Models\Renter;
@@ -58,23 +61,23 @@ class RentService
         $vehicle = Vehicle::findOrFail($data['vehicleId']);
 
         $badRenterStatuses = array(
-            'frozen',
-            'blocked',
+            RenterStatus::Frozen,
+            RenterStatus::Blocked,
         );
 
         if ($this->renterService->checkIsStatus($renter, $badRenterStatuses)) {
             return response()->json(["error" => "Renter with id '$renter->id' has '$renter->status' status"], 403);
         }
 
-        if (!$this->vehicleService->checkIsStatus($vehicle, ['expectation'])) {
+        if (!$this->vehicleService->checkIsStatus($vehicle, [VehicleStatus::Expectation])) {
             return response()->json(["error" => "Vehicle with id '$vehicle->id' can not be rented"], 403);
         }
 
         if (!$this->renterService->checkDefaultBill($renter)) {
-            return response()->json(["error" => "Renter does not main bill account"], 403);
+            return response()->json(["error" => "Renter does not have default bill account"], 403);
         }
 
-        if ($this->renterService->checkBalanceOnDefaultBill($renter) < 500000) {
+        if ($this->renterService->checkBalanceOnDefaultBill($renter) < 100000) {
             return response()->json(["error" => "Renter does not have enough money in the main bill account"], 403);
         }
 
@@ -95,11 +98,11 @@ class RentService
         $renter = Renter::find($rent->renter_id);
         $vehicle = Vehicle::find($rent->vehicle_id);
 
-        if (!$this->checkIsStatus($rent, ['open'])) {
+        if (!$this->checkIsStatus($rent, [RentStatus::Open])) {
             return response()->json(["error" => "Rent status in not open"], 403);
         }
 
-        if (!$this->vehicleService->checkIsStatus($vehicle, ["rented"])) {
+        if (!$this->vehicleService->checkIsStatus($vehicle, [VehicleStatus::Rented])) {
             return response()->json(["error" => "Vehicle status is not rented"], 403);
         }
 

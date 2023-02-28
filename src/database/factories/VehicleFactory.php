@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Vehicle\VehicleStatus;
 use App\Models\Vehicle;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,10 +18,6 @@ class VehicleFactory extends Factory
      */
     public function definition()
     {
-        $status_arr = array(
-            'maintenance',
-            'expectation',
-        );
 
         // Генерируем Российский номерной знак
         do {
@@ -39,7 +36,7 @@ class VehicleFactory extends Factory
 
         return [
             'vehicle_model_id' => fake()->numberBetween(1, 21),
-            'status' => fake()->randomElement($status_arr),
+            'status' => VehicleStatus::getRandomValue(),
             'mileage' => fake()->randomNumber(6),
             'manufacture_year' => fake()->year('now', '1990'),
             'location' => fake()->randomFloat(4, -35, -50) . ' ' . fake()->randomFloat(4, -35, -50),
