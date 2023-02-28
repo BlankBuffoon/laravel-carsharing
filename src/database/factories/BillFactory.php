@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Bill\BillStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,17 +17,9 @@ class BillFactory extends Factory
      */
     public function definition()
     {
-        $status_arr = array(
-            'open',
-            'blocked',
-            'frozen',
-            'closed',
-        );
-
         return [
-            //
             'balance' => fake()->numberBetween(0, 10000000),
-            'status' => fake()->randomElement($status_arr),
+            'status' => BillStatus::getRandomValue(),
         ];
     }
 }

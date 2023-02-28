@@ -45,20 +45,8 @@ class BillService
      * @param array $data
      * @return JsonReaponse
      */
-    public function setBillStatus(array $data) : JsonResponse {
-        $bill = Bill::find($data['billId']);
+    public function setBillStatus(Bill $bill, array $data) : JsonResponse {
         $status = $data['status'];
-
-        $allowedStatuses = array(
-            'open',
-            'blocked',
-            'frozen',
-            'closed',
-        );
-
-        if (!$this->checkIsStatus($bill, $allowedStatuses)) {
-            return response()->json(['error' => "Incorrect status '$status'"], 400);
-        }
 
         if ($this->getStatus($bill) === $status) {
             return response()->json(['error' => "Bill already has '$status' status"], 422);

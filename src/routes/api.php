@@ -49,7 +49,7 @@ Route::prefix('rents')->group(
 Route::get('renters/set/defaultbill', [RenterController::class, 'setDefaultBill']);
 
 // Bills
-Route::get('bills/set/status', [BillController::class, 'setStatus']);
+Route::post('bills/{id}/set/status/', [BillController::class, 'setStatus']);
 
 // Vehicles
 Route::apiResource('vehicles', VehicleController::class);

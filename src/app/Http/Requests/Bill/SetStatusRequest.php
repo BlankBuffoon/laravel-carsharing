@@ -2,13 +2,14 @@
 
 namespace App\Http\Requests\Bill;
 
+use App\Enums\Bill\BillStatus;
+use BenSampo\Enum\Rules\EnumValue;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * @OA\Schema(
- *      schema="Bill/SetStatusRequest",
+ *      schema="BillSetStatusRequest",
  *
- *      @OA\Property(property="billId", type="integer", example="1", description="Идентификатор Счета"),
  *      @OA\Property(property="status", type="string", example="open", description="Статус"),
  * )
  */
@@ -32,17 +33,9 @@ class SetStatusRequest extends FormRequest
     public function rules()
     {
         return [
-            'billId' => [
-                'required',
-                'integer',
-                'numeric',
-                'exists:bills,id',
-            ],
             'status' => [
                 'required',
-                'string',
-                'min:1',
-                'max:10',
+                new EnumValue(BillStatus::class),
             ],
         ];
     }

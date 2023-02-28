@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Bill\SetStatusRequest;
+use App\Models\Bill;
 use App\Services\BillService;
 
 class BillController extends Controller
 {
     /**
-     * @OA\Get(
-     *      path="/api/bills/set/status",
+     * @OA\Post(
+     *      path="/api/bills/{id}/set/status/",
      *      summary="Изменить статус счета",
      *      description="Изменяет статус выбранного счета",
      *      tags={"Счета"},
      *      @OA\Parameter(
-     *          name="billId",
-     *          in="query",
+     *          name="id",
+     *          in="path",
      *          description="Идентификатор Счета",
      *          required=true,
      *          @OA\Schema(
@@ -23,39 +24,34 @@ class BillController extends Controller
      *              example="1"
      *          )
      *      ),
-     *      @OA\Parameter(
-     *          name="status",
-     *          in="query",
-     *          description="Статус",
+     *      @OA\RequestBody(
      *          required=true,
-     *          @OA\Schema(
-     *              type="string",
-     *              example="blocked"
-     *          )
+     *          @OA\JsonContent(ref="#/components/schemas/BillSetStatusRequest")
      *      ),
      *      @OA\Response(
      *          response="200",
      *          description="Возвращает измененный счет",
      *      ),
      *      @OA\Response(
-     *          response="400",
-     *          description="Переданный статус неверен",
-     *          @OA\JsonContent(example={"error": "Incorrect status 'qwerty'"}),
+     *          response="404",
+     *          description="Счет по заданному идентификатору не найден",
      *      ),
      *      @OA\Response(
      *          response="422",
-     *          description="Неверно переданы данные в запросе или произошла ошибка при изменении статуса счета",
+     *          description="Неверно переданы данные в запросе или счет уже имеет запрашиваемый статус",
      *          @OA\JsonContent(example={"error": "Bill already has 'open' status"}),
      *      )
      * ),
      *
      * @param SetStatusRequest $request
      * @param BillService $service
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function setStatus(SetStatusRequest $request, BillService $service) {
+    public function setStatus(SetStatusRequest $request, BillService $service, int $id) {
         $data = $request->validated();
+        $bill = Bill::findOrFail($id);
 
-        return $service->setBillStatus($data);
+        return $service->setBillStatus($bill, $data);
     }
 }

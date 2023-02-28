@@ -6,53 +6,45 @@
         "version": "1.0"
     },
     "paths": {
-        "/api/bills/set/status": {
-            "get": {
+        "/api/bills/{id}/set/status/": {
+            "post": {
                 "tags": [
                     "Счета"
                 ],
                 "summary": "Изменить статус счета",
                 "description": "Изменяет статус выбранного счета",
-                "operationId": "639f9a957a1bf73f19cbe20f84a6a0eb",
+                "operationId": "681e33b286470feeecb43ced8046a134",
                 "parameters": [
                     {
-                        "name": "billId",
-                        "in": "query",
+                        "name": "id",
+                        "in": "path",
                         "description": "Идентификатор Счета",
                         "required": true,
                         "schema": {
                             "type": "integer",
                             "example": "1"
                         }
-                    },
-                    {
-                        "name": "status",
-                        "in": "query",
-                        "description": "Статус",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "example": "blocked"
-                        }
                     }
                 ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BillSetStatusRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Возвращает измененный счет"
                     },
-                    "400": {
-                        "description": "Переданный статус неверен",
-                        "content": {
-                            "application/json": {
-                                "schema": {},
-                                "example": {
-                                    "error": "Incorrect status 'qwerty'"
-                                }
-                            }
-                        }
+                    "404": {
+                        "description": "Счет по заданному идентификатору не найден"
                     },
                     "422": {
-                        "description": "Неверно переданы данные в запросе или произошла ошибка при изменении статуса счета",
+                        "description": "Неверно переданы данные в запросе или счет уже имеет запрашиваемый статус",
                         "content": {
                             "application/json": {
                                 "schema": {},
@@ -443,13 +435,8 @@
     },
     "components": {
         "schemas": {
-            "Bill/SetStatusRequest": {
+            "BillSetStatusRequest": {
                 "properties": {
-                    "billId": {
-                        "description": "Идентификатор Счета",
-                        "type": "integer",
-                        "example": "1"
-                    },
                     "status": {
                         "description": "Статус",
                         "type": "string",
