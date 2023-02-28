@@ -19,6 +19,11 @@ class VehicleSeeder extends Seeder
      */
     public function run()
     {
+        $this->call([
+            VehicleManufacturerSeeder::class,
+            VehicleBrandSeeder::class,
+            VehicleModelSeeder::class,
+        ]);
         Vehicle::factory(40)->create();
     }
 }
