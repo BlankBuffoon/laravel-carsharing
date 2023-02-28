@@ -57,10 +57,6 @@ class Rent extends Model
         }
     }
 
-    public function transactionHadler() {
-
-    }
-
     public function close() {
         $this->end_datetime = Carbon::now();
         $this->calculateRentedTime();
@@ -73,7 +69,6 @@ class Rent extends Model
     }
 
     public function open($renterId, $vehicleId) {
-        //
         $this->vehicle_id = $vehicleId;
         $this->renter_id = $renterId;
         $this->begin_datetime = Carbon::now();

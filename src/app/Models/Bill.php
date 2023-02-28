@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Bill\BillStatus;
+use App\Enums\Bill\BillType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -32,31 +34,34 @@ class Bill extends Model
 
         // При сохранении в модель
         static::saving(function ($bill) {
-            $bill->updateRentersCount();
-            $bill->updateBillType();
+            // $bill->updateRentersCount();
+            // $bill->updateBillType();
         });
     }
 
     public function updateRentersCount() {
         // Получаем кол-во связанных со счетом пользователей
         $this->renters_count = $this->renters()->count();
+        $this->save();
     }
 
     public function updateBillType() {
         // Обновляем статус аккаунта
         if ($this->renters_count > 1)
         {
-            $this->type = 'corporated';
+            $this->type = BillType::Corporated;
         }
 
         elseif ($this->renters_count == 1)
         {
-            $this->type = 'personal';
+            $this->type = BillType::Personal;
         }
 
         elseif ($this->renters_count == 0) {
-            $this->status = 'blocked';
+            $this->status = BillStatus::Blocked;
         }
+
+        $this->save();
     }
 
     public function setStatus($status) {
