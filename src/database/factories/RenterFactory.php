@@ -30,9 +30,9 @@ class RenterFactory extends Factory
             'middle_name' => fake()->firstName(null),
             'last_name' => fake()->lastName(),
             'status' => fake()->randomElement($status_arr),
-            'phone_number' => fake()->numerify('##########'),
-            'email' => fake()->safeEmail(),
-            'passport' => fake()->numerify('#### ######'),
+            'phone_number' => fake()->unique()->numerify('79########'),
+            'email' => fake()->unique()->safeEmail(),
+            'passport' => fake()->unique()->numerify('#### ######'),
         ];
     }
 }

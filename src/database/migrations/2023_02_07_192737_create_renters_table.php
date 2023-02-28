@@ -27,9 +27,9 @@ return new class extends Migration
             $table->string('last_name')->comment("Отчество пользователя");
 
             $table->string('status')->default('active')->comment("Статус пользователя");
-            $table->unsignedBigInteger('phone_number')->comment("Номер телефона пользователя");
-            $table->string('email')->comment("Электронная почта пользователя");
-            $table->string('passport')->comment("Номер и серия паспорта пользователя");
+            $table->unsignedBigInteger('phone_number')->unique()->comment("Номер телефона пользователя");
+            $table->string('email')->unique()->comment("Электронная почта пользователя");
+            $table->string('passport')->unique()->comment("Номер и серия паспорта пользователя");
 
             $table->timestamps();
             $table->softDeletes();
