@@ -35,7 +35,7 @@ class CloseRequest extends FormRequest
                 'required',
                 'integer',
                 'numeric',
-                'exists:rents,id',
+                'exists:rents,id,deleted_at,NULL',
             ]
         ];
     }

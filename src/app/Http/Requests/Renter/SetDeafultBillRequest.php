@@ -36,13 +36,13 @@ class SetDeafultBillRequest extends FormRequest
                 'required',
                 'integer',
                 'numeric',
-                'exists:renters,id',
+                'exists:renters,id,deleted_at,NULL',
             ],
             'billId' => [
                 'required',
                 'integer',
                 'numeric',
-                'exists:bills,id',
+                'exists:bills,id,deleted_at,NULL',
             ]
         ];
     }

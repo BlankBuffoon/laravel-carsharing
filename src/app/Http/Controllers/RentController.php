@@ -170,7 +170,7 @@ class RentController extends Controller
      */
     public function open(OpenRequest $request, RentService $service) {
         $data = $request->validated();
-        // Проверить ошибку для vehicleID = 1
+
         return $service->open($data);
     }
 

@@ -36,13 +36,13 @@ class OpenRequest extends FormRequest
                 'required',
                 'integer',
                 'numeric',
-                'exists:renters,id',
+                'exists:renters,id,deleted_at,NULL',
             ],
             'vehicleId' => [
                 'required',
                 'integer',
                 'numeric',
-                'exists:vehicles,id',
+                'exists:vehicles,id,deleted_at,NULL',
             ]
         ];
     }

@@ -37,7 +37,7 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'vehicle_model_id' => 'required|integer|numeric|exists:vehicle_models,id',
+            'vehicle_model_id' => 'required|integer|numeric|exists:vehicle_models,id,deleted_at,NULL',
             'status' => 'string',
             'mileage' => 'required|integer|numeric',
             'manufacture_year' => 'required|integer|numeric|digits:4',
