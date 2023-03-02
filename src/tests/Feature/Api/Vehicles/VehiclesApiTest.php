@@ -3,7 +3,9 @@
 namespace Tests\Feature\Api\Vehicles;
 
 use App\Models\VehicleManufacturer;
+use Database\Seeders\VehicleBrandSeeder;
 use Database\Seeders\VehicleManufacturerSeeder;
+use Database\Seeders\VehicleModelSeeder;
 use Database\Seeders\VehicleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
