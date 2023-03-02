@@ -16,8 +16,8 @@ return new class extends Migration
     {
         Schema::create('rents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicle_id')->constrained();
-            $table->foreignId('renter_id')->constrained();
+            $table->foreignId('vehicle_id');
+            $table->foreignId('renter_id');
 
             $table->enum('status', RentStatus::getValues())->default(RentStatus::Open)->comment("Статус аренды");
             $table->dateTime('begin_datetime')->comment("Дата и время начала аренды");

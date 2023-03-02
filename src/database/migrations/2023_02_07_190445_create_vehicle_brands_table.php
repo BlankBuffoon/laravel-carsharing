@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('vehicle_brands', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicle_manufacturer_id')->constrained();
+            $table->foreignId('vehicle_manufacturer_id');
             $table->string('name')->unique()->comment("Название бренда ТС");
             $table->timestamps();
             $table->softDeletes();

@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('bill_renter', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignID('bill_id')->constrained()->onDelete('cascade');
-            $table->foreignID('renter_id')->constrained()->onDelete('cascade');
+            $table->foreignID('bill_id');
+            $table->foreignID('renter_id');
 
             $table->timestamps();
             $table->softDeletes();

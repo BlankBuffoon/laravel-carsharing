@@ -17,14 +17,14 @@ return new class extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('vehicle_model_id')->constrained();
+            $table->foreignId('vehicle_model_id');
 
             $table->enum('status', VehicleStatus::getValues())->default(VehicleStatus::Maintenance)->comment("Статус ТС");
 
             $table->unsignedInteger('mileage')->comment("Пробег ТС");
             $table->year('manufacture_year')->comment("Год производства ТС");
             $table->string('location')->comment("Координаты текущего местоположения ТС");
-            $table->string('license_plate')->unique()->unique()->comment("Гос. номер ТС");
+            $table->string('license_plate')->unique()->comment("Гос. номер ТС");
             $table->unsignedInteger('price_at_minute')->comment("Цена за минуту аренды (в рублях)");
 
             $table->timestamps();

@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('bill_id')->constrained();
-            $table->foreignId('renter_id')->constrained();
+            $table->foreignId('bill_id');
+            $table->foreignId('renter_id');
 
             $table->integer('modification')->comment("Модификация операции со счетом (например. +100 или -100)");
             $table->dateTime('transaction_datetime')->comment("Время и дата операции");
