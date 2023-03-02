@@ -7,6 +7,7 @@ use App\Services\RenterService;
 
 class RenterController extends Controller
 {
+    // Написать CRUD
     /**
      * @OA\Get(
      *      path="/api/renters/set/defaultbill",

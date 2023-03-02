@@ -30,7 +30,7 @@ class BillRenter extends Model
 
         static::saving(function ($billRenter) {
             // Если у пользователя нет счета по умолчанию,
-            // То первый добавленный счет автоматически назначается как счет по умолчанию
+            // То первый добавленный счет, автоматически назначается как счет по умолчанию
             if ($billRenter->renter->default_bill == null) {
                 $billRenter->renter->default_bill = $billRenter->bill->id;
                 $billRenter->renter->save();
@@ -38,13 +38,13 @@ class BillRenter extends Model
         });
 
         static::saved(function ($billRenter) {
-            // При сохранении связи обновляем поля в связанном счете
+            // Обновляем поля в связанном счете
             $billRenter->bill->updateRentersCount();
             $billRenter->bill->updateBillType();
         });
 
         static::deleting(function ($billRenter) {
-            // При удалении связи обновляем поля
+            // Обновляем поля в связанном счете
             $billRenter->bill->updateRentersCount();
             $billRenter->bill->updateBillType();
 

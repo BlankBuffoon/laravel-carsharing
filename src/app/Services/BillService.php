@@ -17,7 +17,7 @@ class BillService
     /**
      * Получает статус счета
      *
-     * @param Bill $renter
+     * @param Bill $renter Пользователь для которого получаем статус
      * @return string
      */
     public function getStatus(Bill $bill) : string {
@@ -25,10 +25,11 @@ class BillService
     }
 
     /**
-     * Проверяет имеет ли счет статус(ы)
+     * Проверяет имеет ли счет статус(ы).
+     * (После добавления Enum'ов потребность в функции пропала. Будет удалена после того как удостоверюсь что ничто не сломается)
      *
-     * @param Bill $renter
-     * @param array $statuses
+     * @param Bill $renter Пользователь для которого проверяем наличие статуса(ов)
+     * @param array $statuses Массив со статусами
      * @return bool
      */
     public function checkIsStatus(Bill $bill, array $statuses) : bool {

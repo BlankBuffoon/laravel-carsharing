@@ -45,6 +45,7 @@ class Rent extends Model
         });
     }
 
+    // Вынести в сервис
     public function calculateRentedTime() {
         if ($this->end_datetime != null) {
             $end_datetime = new Carbon($this->end_datetime);
@@ -53,12 +54,18 @@ class Rent extends Model
         }
     }
 
+    // Вынести в сервис
     public function calculateTotalPrice() {
         if ( $this->rented_time ) {
             $this->total_price = $this->vehicle->price_at_minute * $this->rented_time;
         }
     }
 
+    /**
+     * Открывает аренду
+     *
+     * @return void
+     */
     public function close() {
         $this->end_datetime = Carbon::now();
         $this->calculateRentedTime();
@@ -70,6 +77,11 @@ class Rent extends Model
         $this->update();
     }
 
+    /**
+     * Закрывает аренду
+     *
+     * @return void
+     */
     public function open($renterId, $vehicleId) {
         $this->vehicle_id = $vehicleId;
         $this->renter_id = $renterId;
@@ -79,9 +91,5 @@ class Rent extends Model
 
         $this->vehicle->save();
         $this->save();
-    }
-
-    public function getRenter() {
-        return $this->renter();
     }
 }

@@ -37,6 +37,7 @@ class RentService
 
     /**
      * Получает статус пользователя
+     * (После добавления Enum'ов потребность в функции пропала. Будет удалена после того как удостоверюсь что ничто не сломается)
      *
      * @param Rent $renter Пользователь
      * @param array $statuses Статус(ы) для поиска
@@ -57,21 +58,31 @@ class RentService
      * @return JsonResponce
      */
     public function open(array $data) : JsonResponse {
-        $renter = Renter::findOrFail($data['renterId']);
-        $vehicle = Vehicle::findOrFail($data['vehicleId']);
+        $renter = Renter::find($data['renterId']);
+        $vehicle = Vehicle::find($data['vehicleId']);
 
         $badRenterStatuses = array(
             RenterStatus::Frozen,
             RenterStatus::Blocked,
         );
 
-        if ($this->renterService->checkIsStatus($renter, $badRenterStatuses)) {
+        if (in_array($renter->status, $badRenterStatuses)) {
             return response()->json(["error" => "Renter with id '$renter->id' has '$renter->status' status"], 403);
         }
 
-        if (!$this->vehicleService->checkIsStatus($vehicle, [VehicleStatus::Expectation])) {
+        if (!in_array($vehicle->status, [VehicleStatus::Expectation])) {
             return response()->json(["error" => "Vehicle with id '$vehicle->id' can not be rented"], 403);
         }
+
+        // Убрать после тестов
+        // if ($this->renterService->checkIsStatus($renter, $badRenterStatuses)) {
+        //     return response()->json(["error" => "Renter with id '$renter->id' has '$renter->status' status"], 403);
+        // }
+
+        // Убрать после тестов
+        // if (!$this->vehicleService->checkIsStatus($vehicle, [VehicleStatus::Expectation])) {
+        //     return response()->json(["error" => "Vehicle with id '$vehicle->id' can not be rented"], 403);
+        // }
 
         if (!$this->renterService->checkDefaultBill($renter)) {
             return response()->json(["error" => "Renter does not have default bill account"], 403);
@@ -98,13 +109,23 @@ class RentService
         $renter = Renter::find($rent->renter_id);
         $vehicle = Vehicle::find($rent->vehicle_id);
 
-        if (!$this->checkIsStatus($rent, [RentStatus::Open])) {
+        if (!in_array($rent->status, [RentStatus::Open])) {
             return response()->json(["error" => "Rent status in not open"], 403);
         }
 
-        if (!$this->vehicleService->checkIsStatus($vehicle, [VehicleStatus::Rented])) {
+        if (!in_array($vehicle->status, [VehicleStatus::Rented])) {
             return response()->json(["error" => "Vehicle status is not rented"], 403);
         }
+
+        // Убрать после тестов
+        // if (!$this->checkIsStatus($rent, [RentStatus::Open])) {
+        //     return response()->json(["error" => "Rent status in not open"], 403);
+        // }
+
+        // Убрать после тестов
+        // if (!$this->vehicleService->checkIsStatus($vehicle, [VehicleStatus::Rented])) {
+        //     return response()->json(["error" => "Vehicle status is not rented"], 403);
+        // }
 
         if (!$this->renterService->checkDefaultBill($renter)) {
             return response()->json(['error' => "Renter with id '$renter->id' dont have default bill"], 400);
@@ -112,11 +133,14 @@ class RentService
             $bill = Bill::find($renter->default_bill);
         }
 
+        // Закрываем аренду
         $rent->close();
 
+        // Высчитываем цену по которую необходимо вычесть со счета
         $total_price = $rent->total_price;
         $reason = "payment for rent №" . $rent->id;
 
+        // Модифицируем баланс
         $this->billService->modificateBalance($bill, $renter, -$total_price, $reason);
 
         return response()->json($rent, 200);

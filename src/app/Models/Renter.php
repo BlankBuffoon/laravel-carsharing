@@ -44,11 +44,11 @@ class Renter extends Model
         });
     }
 
-    public function getFullname()
-    {
-        return $this->middle_name . ' ' . $this->first_name . ' ' . $this->last_name;
-    }
-
+    /**
+     * Изменяет поле 'default_bill'
+     *
+     * @return void
+     */
     public function setDefaultBill($billId) {
         $this->default_bill = $billId;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\Bill\BillStatus;
 use App\Exceptions\JsonException;
 use App\Models\Bill;
 use App\Models\Renter;
@@ -18,8 +19,8 @@ class RenterService
     /**
      * Получает статус пользователя
      *
-     * @param Renter $renter
-     * @return string
+     * @param Renter $renter Связанный пользователь
+     * @return string Статус
      */
     public function getStatus(Renter $renter) : string {
         return $renter->status;
@@ -27,9 +28,10 @@ class RenterService
 
     /**
      * Проверяет имеет ли пользователь статус(ы)
+     * (Будет удалена после того как удостоверюсь что ничто не сломается)
      *
-     * @param Renter $renter
-     * @param array $statuses
+     * @param Renter $renter Пользователь
+     * @param array $statuses Массив статусов
      * @return bool
      */
     public function checkIsStatus(Renter $renter, array $statuses) : bool {
@@ -43,24 +45,37 @@ class RenterService
     /**
      * Устанавливает счет по умолчанию
      *
-     * @param array $data
+     * @param array $data Массив данных из запроса
      * @return JsonResponse
      */
     public function setdefaultBill(array $data) : JsonResponse {
         $renter = Renter::find($data['renterId']);
         $bill = Bill::find($data['billId']);
 
-        if ($renter->bills()->find($bill->id)) {
+        $badBillStatuses = [
+            BillStatus::Frozen,
+            BillStatus::Closed,
+            BillStatus::Blocked,
+        ];
+
+        // Проверяем что у пользователя действительно есть выбранный счет
+        if (!$renter->bills()->find($bill->id)) {
             return response()->json(['error' => "Renter has not bill with id '$bill->id'"], 422);
         }
 
+        // Проверяем что этот счет уже не выбран
         if ($renter->default_bill === $bill->id) {
             return response()->json(['error' => "Bill with id '$bill->id' is already the default bill"], 422);
         }
 
-        if ($this->billService->checkIsStatus($bill, ['frozen', 'closed', 'blocked'])) {
+        // Проверяем статусы пользователя
+        if (in_array($bill->status, $badBillStatuses)) {
             return response()->json(['error' => "Bill with status '$bill->status' cannot be selected as the default bill"], 400);
         }
+
+        // if ($this->billService->checkIsStatus($bill, ['frozen', 'closed', 'blocked'])) {
+        //     return response()->json(['error' => "Bill with status '$bill->status' cannot be selected as the default bill"], 400);
+        // }
 
         $renter->setDefaultBill($bill->id);
         $renter->save();
@@ -70,7 +85,7 @@ class RenterService
      /**
      * Проверяет есть ли у пользователя счет по умолчанию
      *
-     * @param Renter $renter
+     * @param Renter $renter Пользователь
      * @return bool
      */
     public function checkDefaultBill(Renter $renter) : bool {
@@ -83,8 +98,9 @@ class RenterService
 
     /**
      * Проверяет баланс у пользователя на счету по умолчанию
+     * (Исправить)
      *
-     * @param Renter $renter
+     * @param Renter $renter Пользователь
      * @return mixed
      */
     public function checkBalanceOnDefaultBill(Renter $renter) : mixed {

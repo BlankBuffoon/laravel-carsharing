@@ -8,7 +8,7 @@ class VehicleService
     /**
      * Получает статус пользователя
      *
-     * @param \App\Models\Vehicle $renter
+     * @param Vehicle $vehicle
      * @return string
      */
     public function getStatus(Vehicle $vehicle) : string {
@@ -17,6 +17,7 @@ class VehicleService
 
     /**
      * Проверяет имеет ли ТС статус(ы)
+     * (Будет удалена после того как удостоверюсь что ничто не сломается)
      *
      * @param \App\Models\Vehicle $vehicle
      * @param array $statuses

@@ -28,23 +28,22 @@ class Bill extends Model
         return $this->belongsToMany(Renter::class, 'bill_renter', 'bill_id', 'renter_id');
     }
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        // При сохранении в модель
-        static::saving(function ($bill) {
-            // $bill->updateRentersCount();
-            // $bill->updateBillType();
-        });
-    }
-
+    /**
+     * Обновляет поле renters_count в зависимости от кол-ва связанных записей в пользователях
+     *
+     * @return void
+     */
     public function updateRentersCount() {
         // Получаем кол-во связанных со счетом пользователей
         $this->renters_count = $this->renters()->count();
         $this->save();
     }
 
+    /**
+     * Обновляет тип и статус счета в зависимости от колличества пользователей
+     *
+     * @return void
+     */
     public function updateBillType() {
         // Обновляем статус аккаунта
         if ($this->renters_count > 1)
@@ -64,10 +63,20 @@ class Bill extends Model
         $this->save();
     }
 
+    /**
+     * Изменяет статус счета
+     *
+     * @return void
+     */
     public function setStatus($status) {
         $this->status = $status;
     }
 
+    /**
+     * Изменяет баланс счета
+     *
+     * @return void
+     */
     public function modificateBalance($modification) {
         $this->balance += $modification;
         $this->save();

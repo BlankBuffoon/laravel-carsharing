@@ -9,6 +9,8 @@ use App\Services\BillService;
 class BillController extends Controller
 {
     /**
+     * Запрос на изменение статуса счета
+     *
      * @OA\Post(
      *      path="/api/bills/{id}/set/status/",
      *      summary="Изменить статус счета",
@@ -50,7 +52,7 @@ class BillController extends Controller
      */
     public function setStatus(SetStatusRequest $request, BillService $service, int $id) {
         $data = $request->validated();
-        $bill = Bill::findOrFail($id);
+        $bill = Bill::find($id);
 
         return $service->setBillStatus($bill, $data);
     }

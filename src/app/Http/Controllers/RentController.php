@@ -15,6 +15,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class RentController extends Controller
 {
     /**
+     * Получает аренду по идентификатору
+     *
      * @OA\Get(
      *      path="/api/rents/get",
      *      summary="Получить аренду",
@@ -87,12 +89,14 @@ class RentController extends Controller
      * @return JsonResponse
      */
     public function getStatus(RentService $service, int $id) : JsonResponse {
-        $rent = Rent::findOrFail($id);
+        $rent = Rent::find($id);
 
         return response()->json(['status' => $service->getStatus($rent)], 200);
     }
 
     /**
+     * Получает открытые аренды (переписать на фильтрах)
+     *
      * @OA\Get(
      *      path="/api/rents/get/open",
      *      summary="Получить открытые аренды",
@@ -117,6 +121,8 @@ class RentController extends Controller
     }
 
     /**
+     * Получить закрытые аренды (переписать на фильтрах)
+     *
      * @OA\Get(
      *      path="/api/rents/get/close",
      *      summary="Получить закрытые аренды",
@@ -141,6 +147,8 @@ class RentController extends Controller
     }
 
     /**
+     * Открывает аренду
+     *
      * @OA\Post(
      *      path="/api/rents/open",
      *      summary="Открыть аренду",
@@ -175,6 +183,8 @@ class RentController extends Controller
     }
 
     /**
+     * Закрывает аренду
+     *
      * @OA\Get(
      *      path="/api/rents/close",
      *      summary="Закрыть аренду",
