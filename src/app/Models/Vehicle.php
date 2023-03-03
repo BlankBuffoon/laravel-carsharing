@@ -20,4 +20,8 @@ class Vehicle extends Model
         'license_plate',
         'price_at_minute',
     ];
+
+    protected $hidden = [
+        'location'
+    ];
 }
