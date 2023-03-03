@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('bill_renter', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();;
 
-            $table->foreignID('bill_id');
-            $table->foreignID('renter_id');
+            $table->foreignUuid('bill_id');
+            $table->foreignUUid('renter_id');
 
             $table->timestamps();
             $table->softDeletes();

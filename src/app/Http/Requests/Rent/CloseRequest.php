@@ -33,8 +33,7 @@ class CloseRequest extends FormRequest
         return [
             'rentId' => [
                 'required',
-                'integer',
-                'numeric',
+                'uuid',
                 'exists:rents,id,deleted_at,NULL',
             ]
         ];

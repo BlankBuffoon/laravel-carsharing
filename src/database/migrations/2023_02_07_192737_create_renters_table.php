@@ -15,9 +15,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('renters', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();;
 
-            $table->foreignId('default_bill')
+            $table->foreignUuid('default_bill')
                 ->nullable()
                 ->references('id')
                 ->on('bills')

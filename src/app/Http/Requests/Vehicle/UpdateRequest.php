@@ -37,7 +37,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'vehicle_model_id' => 'integer|numeric|exists:vehicle_models,id,deleted_at,NULL',
+            'vehicle_model_id' => 'uuid|exists:vehicle_models,id,deleted_at,NULL',
             'status' => 'string',
             'mileage' => 'integer|numeric',
             'manufacture_year' => 'integer|numeric|digits:4',

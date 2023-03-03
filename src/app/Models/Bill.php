@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\Bill\BillStatus;
 use App\Enums\Bill\BillType;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,6 +13,7 @@ class Bill extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasUuids;
 
     protected $fillable = [
         'balance',

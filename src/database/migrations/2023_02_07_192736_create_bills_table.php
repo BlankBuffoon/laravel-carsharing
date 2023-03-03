@@ -16,7 +16,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('bills', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();;
 
             $table->integer('renters_count')->default(1)->comment("Колличество пользователей связанных со счетом");
             $table->unsignedBigInteger('balance')->comment("Баланс счета (в копейках)");

@@ -34,14 +34,12 @@ class OpenRequest extends FormRequest
         return [
             'renterId' => [
                 'required',
-                'integer',
-                'numeric',
+                'uuid',
                 'exists:renters,id,deleted_at,NULL',
             ],
             'vehicleId' => [
                 'required',
-                'integer',
-                'numeric',
+                'uuid',
                 'exists:vehicles,id,deleted_at,NULL',
             ]
         ];

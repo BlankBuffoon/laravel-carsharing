@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,6 +12,7 @@ class Transaction extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    use HasUuids;
 
     protected $fillable = [
         'bill_id',
@@ -25,7 +27,7 @@ class Transaction extends Model
 
     /**
      * Создает запись в истории операций
-     * 
+     *
      * @param Bill $bill
      * @param Renter $renter
      * @param int $modification

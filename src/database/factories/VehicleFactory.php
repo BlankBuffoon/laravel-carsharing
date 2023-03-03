@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\Vehicle\VehicleStatus;
 use App\Models\Vehicle;
+use App\Models\VehicleModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -35,7 +36,7 @@ class VehicleFactory extends Factory
         while (!Vehicle::all()->where('license_plate', $licensePlate));
 
         return [
-            'vehicle_model_id' => fake()->numberBetween(1, 21),
+            'vehicle_model_id' => VehicleModel::all()->random()->id,
             'status' => VehicleStatus::getRandomValue(),
             'mileage' => fake()->randomNumber(6),
             'manufacture_year' => fake()->year('now', '1990'),

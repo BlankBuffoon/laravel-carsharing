@@ -14,10 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
-            $table->foreignId('bill_id');
-            $table->foreignId('renter_id');
+            $table->foreignUuid('bill_id');
+            $table->foreignUuid('renter_id');
 
             $table->integer('modification')->comment("Модификация операции со счетом (например. +100 или -100)");
             $table->dateTime('transaction_datetime')->comment("Время и дата операции");

@@ -15,9 +15,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('rents', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('vehicle_id');
-            $table->foreignId('renter_id');
+            $table->uuid('id')->primary();;
+            $table->foreignUuid('vehicle_id');
+            $table->foreignUuid('renter_id');
 
             $table->enum('status', RentStatus::getValues())->default(RentStatus::Open)->comment("Статус аренды");
             $table->dateTime('begin_datetime')->comment("Дата и время начала аренды");
