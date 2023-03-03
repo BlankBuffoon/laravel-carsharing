@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('vehicle_models', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicle_brand_id');
+            $table->foreignId('vehicle_brand_id')
+                ->references('id')
+                ->on('vehicle_brands')
+                ->onDelete('cascade');
             $table->string('name')->unique()->comment("Название модели ТС");
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

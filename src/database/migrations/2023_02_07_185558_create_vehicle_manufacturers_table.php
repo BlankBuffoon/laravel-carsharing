@@ -16,9 +16,8 @@ return new class extends Migration
         Schema::create('vehicle_manufacturers', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique()->comment("Название производителя ТС");
-            
+
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

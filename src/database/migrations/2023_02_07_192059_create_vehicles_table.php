@@ -17,7 +17,10 @@ return new class extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('vehicle_model_id');
+            $table->foreignId('vehicle_model_id')
+                ->references('id')
+                ->on('vehicle_models')
+                ->onDelete('cascade');
 
             $table->enum('status', VehicleStatus::getValues())->default(VehicleStatus::Maintenance)->comment("Статус ТС");
 
