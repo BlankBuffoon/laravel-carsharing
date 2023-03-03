@@ -22,12 +22,17 @@ class RentFactory extends Factory
     public function definition()
     {
 
-        // Генерируем дату начала аренды с диапазоном в 365 дней
-        $beginDateTime = fake()->dateTimeBetween($startDate = '-365 days', $endDate = 'now', $timezone = null);
+        $status = RentStatus::getRandomValue();
+
+        // Если статус аренды "открыта", делаем так чтобы она не сгенерировалась годом ранее
+        if ($status == RentStatus::Open) {
+            $beginDateTime = fake()->dateTimeBetween($startDate = '-1 days', $endDate = 'now', $timezone = null);
+        } else {
+            $beginDateTime = fake()->dateTimeBetween($startDate = '-365 days', $endDate = 'now', $timezone = null);
+        }
+
         // Генерируем дату конца аренды, где максимальное значение - 1 день от начала
         $endDateTime = fake()->dateTimeInInterval($beginDateTime, $endDate = '+1 days', $timezone = null);
-
-        $status = RentStatus::getRandomValue();
 
         return [
             'vehicle_id' => function () use ($status) {
