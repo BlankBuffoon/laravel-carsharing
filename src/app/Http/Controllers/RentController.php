@@ -37,20 +37,17 @@ class RentController extends Controller
      *          description="Возвращает запись аренды",
      *      ),
      *      @OA\Response(
-     *          response="422",
+     *          response="404",
      *          description="Неверно переданы данные в запросе",
      *      )
      * ),
      *
-     * @param GetRequest $request
+     * @param Rent $rent
      * @return JsonResponse
      */
-    public function get(GetRequest $request) : JsonResponse {
-        $data = $request->validated();
+    public function show(Rent $rent) : JsonResponse {
 
-        $rent = Rent::find($data['rentId']);
-
-        return response()->json([$rent], 200);
+        return response()->json($rent, 200);
     }
 
     /**

@@ -36,7 +36,6 @@ Route::prefix('rents')->group(
         Route::post('open', [RentController::class, 'open']);
         Route::prefix('get')->group(
             function () {
-                Route::get('/', [RentController::class, 'get']);
                 Route::get('status/{id}', [RentController::class, 'getStatus']);
                 Route::get('open', [RentController::class, 'getOpen']);
                 Route::get('closed', [RentController::class, 'getClosed']);
@@ -44,6 +43,8 @@ Route::prefix('rents')->group(
         );
     }
 );
+
+Route::apiResource('rents', RentController::class)->only(['show']);
 
 // Renters
 Route::get('renters/set/defaultbill', [RenterController::class, 'setDefaultBill']);
