@@ -287,7 +287,7 @@
         "/api/vehicles/": {
             "get": {
                 "tags": [
-                    "Машины"
+                    "ТС"
                 ],
                 "summary": "Получить все ТС",
                 "description": "Получить список ТС",
@@ -300,7 +300,7 @@
             },
             "post": {
                 "tags": [
-                    "Машины"
+                    "ТС"
                 ],
                 "summary": "Создать ТС",
                 "description": "Создает новое ТС и возвращает ее",
@@ -335,7 +335,7 @@
         "/api/vehicles/{id}": {
             "get": {
                 "tags": [
-                    "Машины"
+                    "ТС"
                 ],
                 "summary": "Получить ТС",
                 "description": "Получает ТС по идентификатору и возвращает его",
@@ -347,8 +347,9 @@
                         "description": "Идентификатор ТС",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "example": 1
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "989bd621-3b30-4932-a507-803672fae71d"
                         }
                     }
                 ],
@@ -370,7 +371,7 @@
             },
             "delete": {
                 "tags": [
-                    "Машины"
+                    "ТС"
                 ],
                 "summary": "Удалить ТС",
                 "description": "Удаляет запись о ТС",
@@ -383,7 +384,8 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "example": 1
+                            "format": "uuid",
+                            "example": "989bd621-3b30-4932-a507-803672fae71d"
                         }
                     }
                 ],
@@ -406,7 +408,7 @@
             },
             "patch": {
                 "tags": [
-                    "Машины"
+                    "ТС"
                 ],
                 "summary": "Обновить ТС",
                 "description": "Обновляет запись о ТС и возвращает ее",
@@ -419,7 +421,8 @@
                         "required": true,
                         "schema": {
                             "type": "integer",
-                            "example": 1
+                            "format": "uuid",
+                            "example": "989bd621-3b30-4932-a507-803672fae71d"
                         }
                     }
                 ],
@@ -446,6 +449,187 @@
                     },
                     "404": {
                         "description": "Неверно передан идентификатор ТС"
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе"
+                    }
+                }
+            }
+        },
+        "/api/vehicles/manufacturers": {
+            "get": {
+                "tags": [
+                    "Производители ТС"
+                ],
+                "summary": "Получить всех производителей ТС",
+                "description": "Получить список всех производителей ТС",
+                "operationId": "d354ea79ba545a7baca1b310b8954446",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список производителей ТС"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Производители ТС"
+                ],
+                "summary": "Создать производителя ТС",
+                "description": "Создает нового производителя ТС и возвращает его",
+                "operationId": "990b27e7c495a6652cef9743ff69c3a5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "VAG"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Возвращает запись созданного производителя ТС",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleManufacturerResourse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе"
+                    }
+                }
+            }
+        },
+        "/api/vehicles/manufacturers/{id}": {
+            "get": {
+                "tags": [
+                    "Производители ТС"
+                ],
+                "summary": "Получить производителя",
+                "description": "Получает производителя ТС по идентификатору и возвращает его",
+                "operationId": "b363e8fa34f1f6dfa90ec579a1a7fecd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Идентификатор производителя ТС",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает запись производителя ТС",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleManufacturerResourse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Не найдено"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Производители ТС"
+                ],
+                "summary": "Удалить производителя",
+                "description": "Удаляет запись о производителе ТС. Важно! Удаление производителя приведет к удалению ВСЕХ связанных моделей, брендов и ТС",
+                "operationId": "95af64c263e297725b22c177b7f606bb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Идентификатор производителя ТС",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает сообщение об успешном удалении",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Succesfully destroyed"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Неверно передан идентификатор производителя ТС"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Производители ТС"
+                ],
+                "summary": "Обновить производителя ТС",
+                "description": "Обновляет запись о производителе ТС и возвращает ее",
+                "operationId": "5cd9d619f4378d9159eecde40d684ce5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Идентификатор производителя",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "VAG"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Возвращает запись ТС",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleManufacturerResourse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Не найдено"
                     },
                     "422": {
                         "description": "Неверно переданы данные в запросе"
@@ -586,10 +770,24 @@
                 },
                 "type": "object"
             },
-            "VehicleResourse": {
+            "VehicleManufacturerResourse": {
                 "properties": {
                     "id": {
                         "type": "integer",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "VAG"
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleResourse": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
                         "example": "989bdecd-cd8a-4aae-96d7-1d1ce023f543"
                     },
                     "vehicle_model_id": {

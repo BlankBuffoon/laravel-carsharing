@@ -163,7 +163,7 @@ class VehicleController extends Controller
      *          response="200",
      *          description="Возвращает сообщение об успешном удалении",
      *          @OA\JsonContent(
-     *              example={"message": "Succesfully destroyed"}
+     *              example={"message": "Succesfully deleted"}
      *          ),
      *      ),
      *      @OA\Response(
