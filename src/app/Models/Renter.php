@@ -37,6 +37,32 @@ class Renter extends Model
         return $this->belongsToMany(Bill::class, 'bill_renter', 'renter_id', 'bill_id');
     }
 
+    // Возможно необходимо переработать связь
+    // и сделать в таблице bills отдельное поле или связующую таблицу
+    /**
+     * @return HasOne
+     */
+    public function defaultBill()
+    {
+        return $this->hasOne(Bill::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function rents()
+    {
+        return $this->hasMany(Rent::class);
+    }
+
     protected static function boot()
     {
         parent::boot();

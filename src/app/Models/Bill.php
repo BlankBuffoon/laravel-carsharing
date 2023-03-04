@@ -25,9 +25,20 @@ class Bill extends Model
         'balance',
     ];
 
+    /**
+     * @return belongsToMany
+     */
     public function renters()
     {
         return $this->belongsToMany(Renter::class, 'bill_renter', 'bill_id', 'renter_id');
+    }
+
+    /**
+     * @return hasMany
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
     }
 
     /**

@@ -26,6 +26,22 @@ class Transaction extends Model
     ];
 
     /**
+     * @return BelongsTo
+     */
+    public function bill()
+    {
+        return $this->belongsTo(Bill::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function renter()
+    {
+        return $this->belongsTo(Renter::class);
+    }
+
+    /**
      * Создает запись в истории операций
      *
      * @param Bill $bill

@@ -12,4 +12,12 @@ class VehicleManufacturer extends Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function brands()
+    {
+        return $this->hasMany(VehicleBrand::class);
+    }
 }

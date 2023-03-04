@@ -26,10 +26,16 @@ class Rent extends Model
         'totalPrice',
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function vehicle() {
         return $this->belongsTo(Vehicle::class);
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function renter() {
         return $this->belongsTo(Renter::class);
     }

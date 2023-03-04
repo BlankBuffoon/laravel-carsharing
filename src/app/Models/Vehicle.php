@@ -26,4 +26,20 @@ class Vehicle extends Model
     protected $hidden = [
         'location'
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function rents()
+    {
+        return $this->hasMany(Rent::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function models()
+    {
+        return $this->belongsTo(VehicleModel::class);
+    }
 }

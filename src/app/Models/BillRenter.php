@@ -16,11 +16,19 @@ class BillRenter extends Model
 
     protected $table = 'bill_renter';
 
+    // Изменить на hasMany?
+    /**
+     * @return BelongsTo
+     */
     public function bill()
     {
         return $this->belongsTo(Bill::class);
     }
 
+    // Изменить на hasMany?
+    /**
+     * @return BelongsTo
+     */
     public function renter()
     {
         return $this->belongsTo(Renter::class);
