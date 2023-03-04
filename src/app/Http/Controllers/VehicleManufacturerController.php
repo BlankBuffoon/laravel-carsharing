@@ -146,7 +146,6 @@ class VehicleManufacturerController extends Controller
     {
         $manufacturer->update($request->validate([
             'name' => [
-                'required',
                 Rule::unique('vehicle_manufacturers', 'name')->ignore($manufacturer),
             ]
         ]));
