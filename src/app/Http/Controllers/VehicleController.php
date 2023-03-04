@@ -18,7 +18,7 @@ class VehicleController extends Controller
      *      path="/api/vehicles/",
      *      summary="Получить все ТС",
      *      description="Получить список ТС",
-     *      tags={"Машины"},
+     *      tags={"ТС"},
      *      @OA\Response(
      *          response="200",
      *          description="Возвращает список ТС",
@@ -39,7 +39,7 @@ class VehicleController extends Controller
      *      path="/api/vehicles/",
      *      summary="Создать ТС",
      *      description="Создает новое ТС и возвращает ее",
-     *      tags={"Машины"},
+     *      tags={"ТС"},
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(ref="#/components/schemas/VehicleCreateRequest")
@@ -55,7 +55,7 @@ class VehicleController extends Controller
      *      )
      * ),
      *
-     * @param  CreateRequest $request
+     * @param CreateRequest $request
      * @return JsonResponse
      */
     public function store(CreateRequest $request) : JsonResponse
@@ -72,13 +72,13 @@ class VehicleController extends Controller
      *      path="/api/vehicles/{id}",
      *      summary="Получить ТС",
      *      description="Получает ТС по идентификатору и возвращает его",
-     *      tags={"Машины"},
+     *      tags={"ТС"},
      *      @OA\Parameter(
      *          name="id",
      *          description="Идентификатор ТС",
      *          required=true,
      *          in="path",
-     *          @OA\Schema(type="integer", example=1)
+     *          @OA\Schema(type="string", format="uuid", example="989bd621-3b30-4932-a507-803672fae71d")
      *      ),
      *      @OA\Response(
      *          response="200",
@@ -91,7 +91,7 @@ class VehicleController extends Controller
      *      )
      * ),
      *
-     * @param  int  $id
+     * @param Vehicle $vehicle
      * @return JsonResponse
      */
     public function show(Vehicle $vehicle) : JsonResponse
@@ -106,13 +106,13 @@ class VehicleController extends Controller
      *      path="/api/vehicles/{id}",
      *      summary="Обновить ТС",
      *      description="Обновляет запись о ТС и возвращает ее",
-     *      tags={"Машины"},
+     *      tags={"ТС"},
      *      @OA\Parameter(
      *          name="id",
      *          description="Идентификатор ТС",
      *          required=true,
      *          in="path",
-     *          @OA\Schema(type="integer", example=1)
+     *          @OA\Schema(type="integer", format="uuid", example="989bd621-3b30-4932-a507-803672fae71d")
      *      ),
      *      @OA\RequestBody(
      *          required=false,
@@ -151,13 +151,13 @@ class VehicleController extends Controller
      *      path="/api/vehicles/{id}",
      *      summary="Удалить ТС",
      *      description="Удаляет запись о ТС",
-     *      tags={"Машины"},
+     *      tags={"ТС"},
      *      @OA\Parameter(
      *          name="id",
      *          description="Идентификатор ТС",
      *          required=true,
      *          in="path",
-     *          @OA\Schema(type="integer", example=1)
+     *          @OA\Schema(type="integer", format="uuid", example="989bd621-3b30-4932-a507-803672fae71d")
      *      ),
      *      @OA\Response(
      *          response="200",
