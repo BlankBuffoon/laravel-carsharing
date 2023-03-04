@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Vehicle\CreateRequest;
 use App\Http\Requests\Vehicle\UpdateRequest;
+use App\Http\Resources\VehicleResourse;
 use App\Models\Vehicle;
 use Illuminate\Http\JsonResponse;
 
@@ -28,7 +29,7 @@ class VehicleController extends Controller
      */
     public function index() : JsonResponse
     {
-        return response()->json(Vehicle::all(), 200);
+        return response()->json(VehicleResourse::collection(Vehicle::all()), 200);
     }
 
     /**
@@ -62,7 +63,7 @@ class VehicleController extends Controller
 
         return response()->json([
             'message' => 'Succesfully created',
-            $newVehicle->id => $newVehicle
+            'model' => new VehicleResourse($newVehicle)
         ], 200);
     }
 
@@ -94,13 +95,9 @@ class VehicleController extends Controller
      * @param  int  $id
      * @return JsonResponse
      */
-    public function show(int $id) : JsonResponse
+    public function show(Vehicle $vehicle) : JsonResponse
     {
-        $vehicle = Vehicle::find($id);
-
-        return response()->json([
-            $vehicle->id => $vehicle
-        ], 200);
+        return response()->json(new VehicleResourse($vehicle), 200);
     }
 
     /**
@@ -146,7 +143,7 @@ class VehicleController extends Controller
 
         return response()->json([
             'message' => 'Succesfully updated',
-            $vehicle->id => $vehicle
+            'model' => new VehicleResourse($vehicle)
         ], 200);
     }
 
