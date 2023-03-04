@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Vehicle;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 /**
  * @OA\Schema(
@@ -37,7 +38,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'vehicle_model_id' => 'uuid|exists:vehicle_models,id,deleted_at,NULL',
+            'vehicle_model_id' => 'numeric|integer|exists:vehicle_models,id',
             'status' => 'string',
             'mileage' => 'integer|numeric',
             'manufacture_year' => 'integer|numeric|digits:4',
@@ -47,7 +48,7 @@ class UpdateRequest extends FormRequest
             ],
             'license_plate' => [
                 'string',
-                'unique:vehicles,license_plate',
+                Rule::unique('vehicles', 'license_plate')->ignore($this->route('vehicle')->id),
                 'regex:/^[АВЕКМНОРСТУ]\d{3}[АВЕКМНОРСТУ]{2}\ \d{2,3}$/u'
             ],
             'price_at_minute' => 'integer|numeric',
