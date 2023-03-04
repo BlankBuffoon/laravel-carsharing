@@ -64,7 +64,7 @@
                 ],
                 "summary": "Получить аренду",
                 "description": "Получить запись об аренде по идентификатору",
-                "operationId": "0252e7ae3cfdca3d28bc8d306a96d6b2",
+                "operationId": "acef5cced65fcd25fdbde7579ba8a3cd",
                 "parameters": [
                     {
                         "name": "rentId",
@@ -81,7 +81,7 @@
                     "200": {
                         "description": "Возвращает запись аренды"
                     },
-                    "422": {
+                    "404": {
                         "description": "Неверно переданы данные в запросе"
                     }
                 }
@@ -317,7 +317,14 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Возвращает запись созданного ТС"
+                        "description": "Возвращает запись созданного ТС",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleResourse"
+                                }
+                            }
+                        }
                     },
                     "422": {
                         "description": "Неверно переданы данные в запросе"
@@ -347,7 +354,14 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Возвращает запись ТС"
+                        "description": "Возвращает запись ТС",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleResourse"
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "ТС не найдено"
@@ -421,7 +435,14 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Возвращает запись ТС"
+                        "description": "Возвращает запись ТС",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleResourse"
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "Неверно передан идентификатор ТС"
@@ -561,6 +582,35 @@
                         "description": "Цена в копейках за минуту аренды ТС",
                         "type": "integer",
                         "example": "400000"
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleResourse": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "989bdecd-cd8a-4aae-96d7-1d1ce023f543"
+                    },
+                    "vehicle_model_id": {
+                        "type": "integer",
+                        "example": "4"
+                    },
+                    "status": {
+                        "type": "integer",
+                        "example": "rented"
+                    },
+                    "mileage": {
+                        "type": "integer",
+                        "example": "110"
+                    },
+                    "manufacture_year": {
+                        "type": "integer",
+                        "example": "2019"
+                    },
+                    "price_at_minute": {
+                        "type": "integer",
+                        "example": "90000"
                     }
                 },
                 "type": "object"

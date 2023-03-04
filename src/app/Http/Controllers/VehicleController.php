@@ -47,6 +47,7 @@ class VehicleController extends Controller
      *      @OA\Response(
      *          response="200",
      *          description="Возвращает запись созданного ТС",
+     *          @OA\JsonContent(ref="#/components/schemas/VehicleResourse"),
      *      ),
      *      @OA\Response(
      *          response="422",
@@ -61,10 +62,7 @@ class VehicleController extends Controller
     {
         $newVehicle = Vehicle::create($request->validated());
 
-        return response()->json([
-            'message' => 'Succesfully created',
-            'model' => new VehicleResourse($newVehicle)
-        ], 200);
+        return response()->json(new VehicleResourse($newVehicle), 200);
     }
 
     /**
@@ -85,6 +83,7 @@ class VehicleController extends Controller
      *      @OA\Response(
      *          response="200",
      *          description="Возвращает запись ТС",
+     *          @OA\JsonContent(ref="#/components/schemas/VehicleResourse"),
      *      ),
      *      @OA\Response(
      *          response="404",
@@ -122,6 +121,7 @@ class VehicleController extends Controller
      *      @OA\Response(
      *          response="200",
      *          description="Возвращает запись ТС",
+     *          @OA\JsonContent(ref="#/components/schemas/VehicleResourse"),
      *      ),
      *      @OA\Response(
      *          response="404",
@@ -141,10 +141,7 @@ class VehicleController extends Controller
     {
         $vehicle->update($request->validated());
 
-        return response()->json([
-            'message' => 'Succesfully updated',
-            'model' => new VehicleResourse($vehicle)
-        ], 200);
+        return response()->json(new VehicleResourse($vehicle), 200);
     }
 
     /**
@@ -182,6 +179,6 @@ class VehicleController extends Controller
     {
         $vehicle->delete();
 
-        return response()->json(['message' => 'Succesfully destroyed'], 200);
+        return response()->json(['message' => 'Succesfully deleted'], 200);
     }
 }
