@@ -284,6 +284,195 @@
                 }
             }
         },
+        "/api/vehicles/brands": {
+            "get": {
+                "tags": [
+                    "Бренды ТС"
+                ],
+                "summary": "Получить все бренды ТС",
+                "description": "Получить список всех брендов ТС",
+                "operationId": "52089cbec2ade682b178c30d683246b7",
+                "responses": {
+                    "200": {
+                        "description": "Возвращает список брендов ТС"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Бренды ТС"
+                ],
+                "summary": "Создать бренд ТС",
+                "description": "Создает новый бренд ТС и возвращает его",
+                "operationId": "19d322b2dfd986c9c04dc16d952c3cdb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "vehicle_manufacturer_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Audi"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Возвращает запись созданного бренда ТС",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleBrandResourse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе"
+                    }
+                }
+            }
+        },
+        "/api/vehicles/brands/{id}": {
+            "get": {
+                "tags": [
+                    "Бренды ТС"
+                ],
+                "summary": "Получить бренд",
+                "description": "Получает бренд ТС по идентификатору и возвращает его",
+                "operationId": "22efb00a5abe9eaf2230dc71fd5c657a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Идентификатор бренда ТС",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает запись бренда ТС",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleBrandResourse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Не найдено"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Бренды ТС"
+                ],
+                "summary": "Удалить бренд",
+                "description": "Удаляет запись о бренде ТС. Важно! Удаление бренда приведет к удалению ВСЕХ связанных моделей и ТС",
+                "operationId": "18e3cd63db8bdfdc6bf134fb35f3fa5c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Идентификатор бренда ТС",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Возвращает сообщение об успешном удалении",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "message": "Succesfully deleted"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Не найдено"
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Бренды ТС"
+                ],
+                "summary": "Обновить бренд ТС",
+                "description": "Обновляет запись о бренде ТС и возвращает ее",
+                "operationId": "bb928c7c29ff0436b3840dca2c331647",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Идентификатор бренда",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "vehicle_manufacturer_id": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Audi"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Возвращает запись бренда ТС",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VehicleBrandResourse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Не найдено"
+                    },
+                    "422": {
+                        "description": "Неверно переданы данные в запросе"
+                    }
+                }
+            }
+        },
         "/api/vehicles/": {
             "get": {
                 "tags": [
@@ -396,7 +585,7 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "message": "Succesfully destroyed"
+                                    "message": "Succesfully deleted"
                                 }
                             }
                         }
@@ -572,7 +761,7 @@
                             "application/json": {
                                 "schema": {},
                                 "example": {
-                                    "message": "Succesfully destroyed"
+                                    "message": "Succesfully deleted"
                                 }
                             }
                         }
@@ -619,7 +808,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Возвращает запись ТС",
+                        "description": "Возвращает запись производителя ТС",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -766,6 +955,23 @@
                         "description": "Цена в копейках за минуту аренды ТС",
                         "type": "integer",
                         "example": "400000"
+                    }
+                },
+                "type": "object"
+            },
+            "VehicleBrandResourse": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "vehicle_manufacturer_id": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Audi"
                     }
                 },
                 "type": "object"

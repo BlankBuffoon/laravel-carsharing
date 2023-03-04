@@ -8,6 +8,7 @@ use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\RentController;
 use App\Http\Controllers\RenterController;
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\VehicleBrandController;
 use App\Http\Controllers\VehicleManufacturerController;
 
 /*
@@ -57,6 +58,7 @@ Route::post('bills/{id}/set/status/', [BillController::class, 'setStatus']);
 Route::prefix('vehicles')->group(
     function () {
         Route::apiResource('manufacturers', VehicleManufacturerController::class);
+        Route::apiResource('brands', VehicleBrandController::class);
     }
 );
 
