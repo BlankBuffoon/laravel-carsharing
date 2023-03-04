@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @OA\Schema(
  *      schema="VehicleResourse",
- *      @OA\Property(property="id", type="integer", example="989bdecd-cd8a-4aae-96d7-1d1ce023f543"),
+ *      @OA\Property(property="id", type="string", format="uuid", example="989bdecd-cd8a-4aae-96d7-1d1ce023f543"),
  *      @OA\Property(property="vehicle_model_id", type="integer", example="4"),
  *      @OA\Property(property="status", type="integer", example="rented"),
  *      @OA\Property(property="mileage", type="integer", example="110"),
