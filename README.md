@@ -61,24 +61,25 @@
 #### Vehicle_brands - Бренды ТС
 
 - `ID` - первичный ключ
-- `manufacturer_id` - внешний ключ для связи с `vehicle_manufacturers`
+- `vehicle_manufacturer_id` - внешний ключ для связи с `vehicle_manufacturers`
 - `name` - название бренда ТС
 
 #### Vehicle_models - Модели ТС
 
 - `ID` - первичный ключ
-- `brand_id` - внешний ключ для связи с `vehicle_brands`
+- `vehicle_brand_id` - внешний ключ для связи с `vehicle_brands`
 - `name` - название модели ТС
 
 #### Vehicles - Транспортные средства
 
 - `ID` - первичный ключ
-- `model_id` - внешний ключ для связи с `vehicle_models`
+- `vehicle_model_id` - внешний ключ для связи с `vehicle_models`
 - `status` - статус ТС
 - `mileage` - пробег ТС
+- `manufacture_year` - год производства ТС
 - `location` - координаты ТС
 - `license_plate` - гос. номер ТС
-- `prise_at_hour` - цена за час аренды
+- `prise_at_minute` - цена за час аренды
 
 #### Rents - информация об арендах
 
@@ -94,12 +95,13 @@
 #### Renters - арендаторы
 
 - `ID` - первичный ключ
+- `default_bill` - Счет по умолчанию у пользователя (связан с таблицей `bills`)
 - `first_name` - имя
 - `middle_name` - фамилия
 - `last_name` - отчество
 - `status` - статус пользователя (активный, бан, заморожен)
-- `email` - номер телефона пользователя
-- `end_datetime` - email
+- `phone_number` - номер телефона пользователя
+- `email` - email
 - `passport` - серия и номер паспорта
 
 #### Renters_bills - Промежуточная таблица для связи "МкМ"
@@ -111,7 +113,6 @@
 #### Bills - Счета
 
 - `ID` - первичный ключ
-- `renter_id` - внешний ключ для связи с `renters`
 - `renters_count` - колличество пользователей привязаных к счету
 - `type` - тип счета
 - `balance` - баланс счета
