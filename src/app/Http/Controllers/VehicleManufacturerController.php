@@ -125,7 +125,7 @@ class VehicleManufacturerController extends Controller
      *      ),
      *      @OA\Response(
      *          response="200",
-     *          description="Возвращает запись ТС",
+     *          description="Возвращает запись производителя ТС",
      *          @OA\JsonContent(ref="#/components/schemas/VehicleManufacturerResourse"),
      *      ),
      *      @OA\Response(
